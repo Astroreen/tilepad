@@ -33,5 +33,7 @@
   enterShell = ''
     echo "🚀 JavaFX Development Environment (NixOS) Loaded"
     echo "LD_LIBRARY_PATH is set for native JFX libraries."
+    mkdir -p .devenv
+    ln -sfn ${pkgs.javaPackages.openjfx25}/modules .devenv/javafx-modules
   '';
 }
