@@ -12,7 +12,7 @@
   ];
 
   # 2. Define the library path for JavaFX's unpatched binaries
-  env.LD_LIBRARY_PATH = lib.makeLibraryPath (
+  env.LD_LIBRARY_PATH = "${lib.makeLibraryPath (
     with pkgs;
     [
       libXxf86vm
@@ -22,11 +22,10 @@
       gtk3
       libGL
       glib
-      # Adding these common JFX dependencies just in case
       fontconfig
       freetype
     ]
-  );
+  )}:${pkgs.javaPackages.openjfx25}/modules_libs";
   env.JAVA_MODULE_PATH = "${pkgs.javaPackages.openjfx25}/modules";
   env.JAVA_LIBRARY_PATH = "${pkgs.javaPackages.openjfx25}/modules_libs";
 
