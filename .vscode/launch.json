@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch JavaFX (Auto-Path)",
+            "request": "launch",
+            "mainClass": "me.astroreen.tilepad.Tilepad",
+            "projectName": "tilepad",
+            "vmArgs": "--module-path /home/astroreen/.local/share/javafx/javafx-sdk-25.0.2/lib --add-modules javafx.controls,javafx.fxml --enable-native-access=javafx.graphics",
+            "env": {
+                "LD_LIBRARY_PATH": "/run/opengl-driver/lib:/run/current-system/sw/lib:${env:LD_LIBRARY_PATH}"
+            }
+        }
+    ]
+}
