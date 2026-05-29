@@ -7,9 +7,9 @@
             "request": "launch",
             "mainClass": "me.astroreen.tilepad.Tilepad",
             "projectName": "tilepad",
-            "vmArgs": "--module-path /home/astroreen/.local/share/javafx/javafx-sdk-25.0.2/lib --add-modules javafx.controls,javafx.fxml --enable-native-access=javafx.graphics",
             "env": {
-                "LD_LIBRARY_PATH": "/run/opengl-driver/lib:/run/current-system/sw/lib:${env:LD_LIBRARY_PATH}"
+                "LD_LIBRARY_PATH": "/run/opengl-driver/lib:/run/current-system/sw/lib:${env:LD_LIBRARY_PATH}",
+                "JDK_JAVA_OPTIONS": "--module-path ${env:JAVAFX_HOME}/lib --add-modules javafx.controls,javafx.fxml --enable-native-access=javafx.graphics"
             }
         }
     ]

@@ -28,6 +28,7 @@
   )}:${pkgs.javaPackages.openjfx25}/modules_libs";
   env.JAVA_MODULE_PATH = "${pkgs.javaPackages.openjfx25}/modules";
   env.JAVA_LIBRARY_PATH = "${pkgs.javaPackages.openjfx25}/modules_libs";
+  env.JAVAFX_HOME = "/home/astroreen/.local/share/javafx/javafx-sdk-25.0.2";
 
   # Optional: Print a nice message when you enter the shell
   enterShell = ''
