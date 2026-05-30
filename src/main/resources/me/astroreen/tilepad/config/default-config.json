@@ -1,0 +1,82 @@
+{
+  "configPath": "",
+  "activeProfile": "default",
+  "windowX": 100,
+  "windowY": 100,
+  "windowWidth": 1280,
+  "windowHeight": 800,
+  "profiles": [
+    {
+      "name": "default",
+      "gridColumns": 6,
+      "tiles": [
+        {
+          "id": "t1",
+          "col": 0,
+          "row": 0,
+          "colSpan": 4,
+          "rowSpan": 1,
+          "title": "System Health",
+          "textPosition": "BOTTOM_LEFT",
+          "icon": {
+            "type": "MATERIAL",
+            "value": "monitoring",
+            "position": "TOP_LEFT"
+          },
+          "background": {
+            "type": "COLOR",
+            "value": "#212b39"
+          },
+          "action": {
+            "type": "COMMAND",
+            "value": "htop"
+          }
+        },
+        {
+          "id": "t2",
+          "col": 4,
+          "row": 0,
+          "colSpan": 1,
+          "rowSpan": 1,
+          "title": "Main Power",
+          "textPosition": "BOTTOM_LEFT",
+          "icon": {
+            "type": "MATERIAL",
+            "value": "power_settings_new",
+            "position": "TOP_LEFT"
+          },
+          "background": {
+            "type": "COLOR",
+            "value": "#16202e"
+          },
+          "action": {
+            "type": "COMMAND",
+            "value": "echo power"
+          }
+        },
+        {
+          "id": "t3",
+          "col": 5,
+          "row": 0,
+          "colSpan": 1,
+          "rowSpan": 1,
+          "title": "",
+          "textPosition": "CENTER",
+          "icon": {
+            "type": "MATERIAL",
+            "value": "lightbulb",
+            "position": "CENTER"
+          },
+          "background": {
+            "type": "COLOR",
+            "value": "#16202e"
+          },
+          "action": {
+            "type": "URL",
+            "value": "https://example.com"
+          }
+        }
+      ]
+    }
+  ]
+}
