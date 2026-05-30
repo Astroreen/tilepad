@@ -1,0 +1,250 @@
+/* ============================================================
+ * TilePad - Main Application CSS
+ * Design System: Command & Control System (Dark Theme)
+ * JavaFX 21 CSS
+ * ============================================================ */
+
+/* ----- DESIGN TOKENS (from DESIGN.md) -----
+ *
+ * SURFACE / BACKGROUND
+ * surface / background:          #091421
+ * surface-dim:                   #091421
+ * surface-bright:                #303a48
+ * surface-container-lowest:      #050f1c
+ * surface-container-low:         #121c2a
+ * surface-container:             #16202e
+ * surface-container-high:        #212b39
+ * surface-container-highest:     #2b3544
+ * surface-variant:               #2b3544
+ *
+ * ON-SURFACE
+ * on-surface:                    #d9e3f6
+ * on-surface-variant:            #c2c6d6
+ * inverse-surface:               #d9e3f6
+ * inverse-on-surface:            #27313f
+ *
+ * OUTLINE
+ * outline:                       #8c909f
+ * outline-variant:               #424754
+ *
+ * PRIMARY
+ * primary:                       #adc6ff
+ * on-primary:                    #002e6a
+ * primary-container:             #4d8eff
+ * on-primary-container:          #00285d
+ * inverse-primary:               #005ac2
+ * primary-fixed:                 #d8e2ff
+ * primary-fixed-dim:             #adc6ff
+ * on-primary-fixed:              #001a42
+ * on-primary-fixed-variant:      #004395
+ * surface-tint:                  #adc6ff
+ *
+ * SECONDARY
+ * secondary:                     #4edea3
+ * on-secondary:                  #003824
+ * secondary-container:           #00a572
+ * on-secondary-container:        #00311f
+ * secondary-fixed:               #6ffbbe
+ * secondary-fixed-dim:           #4edea3
+ * on-secondary-fixed:            #002113
+ * on-secondary-fixed-variant:    #005236
+ *
+ * TERTIARY
+ * tertiary:                      #ffb786
+ * on-tertiary:                   #502400
+ * tertiary-container:            #df7412
+ * on-tertiary-container:         #461f00
+ * tertiary-fixed:                #ffdcc6
+ * tertiary-fixed-dim:            #ffb786
+ * on-tertiary-fixed:             #311400
+ * on-tertiary-fixed-variant:     #723600
+ *
+ * ERROR
+ * error:                         #ffb4ab
+ * on-error:                      #690005
+ * error-container:               #93000a
+ * on-error-container:            #ffdad6
+ *
+ * ------------------------------------------ */
+
+/* Root */
+.root {
+    -fx-background-color: #091421;
+    -fx-font-family: "Inter";
+    -fx-font-size: 13px;
+}
+
+.main-root {
+    -fx-background-color: #091421;
+}
+
+/* Profile bar at top */
+.profile-bar {
+    -fx-background-color: #121c2a;
+    -fx-padding: 8 16 8 16;
+    -fx-spacing: 8;
+    -fx-alignment: center-left;
+}
+
+/* Profile label */
+.profile-label {
+    -fx-text-fill: #d9e3f6;
+    -fx-font-size: 13px;
+}
+
+/* ComboBox in profile bar */
+.profile-combo {
+    -fx-pref-width: 160px;
+    -fx-background-color: #212b39;
+    -fx-text-fill: #d9e3f6;
+    -fx-background-radius: 6px;
+}
+
+.profile-combo .list-cell {
+    -fx-text-fill: #d9e3f6;
+    -fx-background-color: #212b39;
+}
+
+.profile-combo:hover {
+    -fx-background-color: #303a48;
+}
+
+/* Toolbar buttons */
+.toolbar-button {
+    -fx-background-color: #212b39;
+    -fx-text-fill: #d9e3f6;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-padding: 4 12 4 12;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.toolbar-button:hover {
+    -fx-background-color: #303a48;
+}
+
+.toolbar-button:pressed {
+    -fx-background-color: #2b3544;
+}
+
+/* ScrollPane container */
+.main-scroll {
+    -fx-background-color: #091421;
+    -fx-background: #091421;
+    -fx-border-color: transparent;
+}
+
+.main-scroll > .viewport {
+    -fx-background-color: #091421;
+}
+
+.main-scroll .scroll-bar {
+    -fx-background-color: #121c2a;
+}
+
+.main-scroll .scroll-bar .thumb {
+    -fx-background-color: #424754;
+    -fx-background-radius: 4px;
+}
+
+.main-scroll .scroll-bar .thumb:hover {
+    -fx-background-color: #8c909f;
+}
+
+/* General text styles */
+.text-on-surface {
+    -fx-text-fill: #d9e3f6;
+}
+
+.text-on-surface-variant {
+    -fx-text-fill: #c2c6d6;
+}
+
+.text-primary {
+    -fx-text-fill: #adc6ff;
+}
+
+.text-secondary {
+    -fx-text-fill: #4edea3;
+}
+
+.text-tertiary {
+    -fx-text-fill: #ffb786;
+}
+
+.text-error {
+    -fx-text-fill: #ffb4ab;
+}
+
+/* Separator */
+.separator .line {
+    -fx-border-color: #424754;
+    -fx-border-width: 1px;
+}
+
+/* Label variants */
+.label-sm {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #c2c6d6;
+}
+
+.label-md {
+    -fx-font-size: 12px;
+    -fx-text-fill: #d9e3f6;
+}
+
+.label-lg {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d9e3f6;
+}
+
+/* Menu / ContextMenu */
+.context-menu {
+    -fx-background-color: #16202e;
+    -fx-border-color: #424754;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 4 0 4 0;
+}
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #d9e3f6;
+    -fx-font-size: 13px;
+    -fx-padding: 6 12 6 12;
+}
+
+.menu-item:hover,
+.menu-item:focused {
+    -fx-background-color: #212b39;
+}
+
+/* TextField */
+.text-field {
+    -fx-background-color: #16202e;
+    -fx-text-fill: #d9e3f6;
+    -fx-prompt-text-fill: #8c909f;
+    -fx-border-color: #424754;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-border-width: 1px;
+    -fx-padding: 6 10 6 10;
+}
+
+.text-field:focused {
+    -fx-border-color: #adc6ff;
+}
+
+/* Tooltip */
+.tooltip {
+    -fx-background-color: #2b3544;
+    -fx-text-fill: #d9e3f6;
+    -fx-font-size: 12px;
+    -fx-background-radius: 4px;
+    -fx-border-color: #424754;
+    -fx-border-width: 1px;
+}

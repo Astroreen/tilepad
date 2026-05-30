@@ -1,0 +1,253 @@
+/* ============================================================
+ * TilePad - Tiles CSS
+ * Design System: Command & Control System (Dark Theme)
+ * JavaFX 21 CSS
+ * ============================================================ */
+
+/* Base tile */
+.tile {
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-border-color: #424754;
+    -fx-border-width: 1px;
+    -fx-cursor: hand;
+    -fx-background-color: #16202e;
+}
+
+.tile:hover {
+    -fx-background-color: #303a48;
+    -fx-border-color: #8c909f;
+}
+
+.tile:pressed {
+    -fx-background-color: #2b3544;
+    -fx-border-color: #adc6ff;
+}
+
+/* Tile title text */
+.tile-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d9e3f6;
+    -fx-wrap-text: true;
+}
+
+/* Tile subtitle / description */
+.tile-subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #c2c6d6;
+    -fx-wrap-text: true;
+}
+
+/* Material Icons label */
+.tile-icon-label {
+    -fx-font-family: "Material Icons";
+    -fx-font-size: 24px;
+    -fx-text-fill: #d9e3f6;
+}
+
+/* Material Symbols Outlined variant */
+.tile-icon-outlined {
+    -fx-font-family: "Material Symbols Outlined";
+    -fx-font-size: 24px;
+    -fx-text-fill: #d9e3f6;
+}
+
+/* Large icon (32px) for 1x1 centered tiles */
+.tile-icon-lg {
+    -fx-font-family: "Material Icons";
+    -fx-font-size: 32px;
+    -fx-text-fill: #d9e3f6;
+}
+
+/* Icon color variants matching design system accents */
+.tile-icon-primary {
+    -fx-text-fill: #adc6ff;
+}
+
+.tile-icon-secondary {
+    -fx-text-fill: #4edea3;
+}
+
+.tile-icon-tertiary {
+    -fx-text-fill: #ffb786;
+}
+
+.tile-icon-error {
+    -fx-text-fill: #ffb4ab;
+}
+
+.tile-icon-muted {
+    -fx-text-fill: #c2c6d6;
+}
+
+/* Status pip indicator (small circular label) */
+.tile-status-pip {
+    -fx-min-width: 8px;
+    -fx-min-height: 8px;
+    -fx-max-width: 8px;
+    -fx-max-height: 8px;
+    -fx-background-radius: 9999px;
+    -fx-border-radius: 9999px;
+}
+
+.tile-status-pip-active {
+    -fx-background-color: #4edea3;
+}
+
+.tile-status-pip-error {
+    -fx-background-color: #ffb4ab;
+}
+
+.tile-status-pip-warning {
+    -fx-background-color: #ffb786;
+}
+
+.tile-status-pip-inactive {
+    -fx-background-color: #8c909f;
+}
+
+/* Tile grid (GridPane) */
+.tile-grid {
+    -fx-background-color: #091421;
+    -fx-hgap: 12;
+    -fx-vgap: 12;
+    -fx-padding: 24;
+}
+
+/* WYSIWYG editor canvas (AnchorPane) */
+.editor-canvas {
+    -fx-background-color: #050f1c;
+}
+
+/* TilePreviewNode selection highlight */
+.tile-preview-selected {
+    -fx-border-color: #4f93ff;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+/* TilePreviewNode default (in editor, unselected) */
+.tile-preview {
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-border-color: #424754;
+    -fx-border-width: 1px;
+    -fx-background-color: #16202e;
+}
+
+.tile-preview:hover {
+    -fx-border-color: #8c909f;
+}
+
+/* Editor toolbar */
+.editor-toolbar {
+    -fx-background-color: #121c2a;
+    -fx-padding: 8 12 8 12;
+    -fx-spacing: 8;
+}
+
+/* Editor toolbar buttons */
+.editor-toolbar-button {
+    -fx-background-color: #212b39;
+    -fx-text-fill: #d9e3f6;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-padding: 4 10 4 10;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.editor-toolbar-button:hover {
+    -fx-background-color: #303a48;
+}
+
+.editor-toolbar-button:pressed {
+    -fx-background-color: #2b3544;
+}
+
+/* Active/toggled toolbar button */
+.editor-toolbar-button-active {
+    -fx-background-color: #4d8eff;
+    -fx-text-fill: #00285d;
+}
+
+/* Properties panel (right sidebar) */
+.properties-panel {
+    -fx-background-color: #0d1825;
+    -fx-padding: 12;
+    -fx-spacing: 8;
+}
+
+.properties-label {
+    -fx-text-fill: #8c909f;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.properties-value {
+    -fx-text-fill: #d9e3f6;
+    -fx-font-size: 13px;
+}
+
+/* Properties section header */
+.properties-section-header {
+    -fx-text-fill: #c2c6d6;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 0 4 0;
+}
+
+/* Color picker in properties */
+.properties-color-picker {
+    -fx-background-color: #212b39;
+    -fx-border-color: #424754;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+/* Tile badge / chip */
+.tile-badge {
+    -fx-background-radius: 9999px;
+    -fx-border-radius: 9999px;
+    -fx-padding: 2 8 2 8;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.tile-badge-primary {
+    -fx-background-color: #4d8eff;
+    -fx-text-fill: #00285d;
+}
+
+.tile-badge-secondary {
+    -fx-background-color: #00a572;
+    -fx-text-fill: #00311f;
+}
+
+.tile-badge-error {
+    -fx-background-color: #93000a;
+    -fx-text-fill: #ffdad6;
+}
+
+/* Tile list item (log / history rows) */
+.tile-list-item {
+    -fx-padding: 12 0 12 0;
+    -fx-border-color: transparent transparent #424754 transparent;
+    -fx-border-width: 1px;
+}
+
+.tile-list-item:hover {
+    -fx-background-color: #16202e;
+}
+
+/* Tile overlay (glassmorphism modal backdrop) */
+.tile-overlay {
+    -fx-background-color: rgba(9, 20, 33, 0.8);
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-border-color: #424754;
+    -fx-border-width: 1px;
+}
