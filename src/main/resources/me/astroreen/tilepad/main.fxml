@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="me.astroreen.tilepad.ui.MainController"
+            stylesheets="@styles/main.css">
+    <top>
+        <HBox styleClass="profile-bar" spacing="8" alignment="CENTER_LEFT">
+            <padding><Insets top="8" right="12" bottom="8" left="12"/></padding>
+            <Label text="Profile:" styleClass="profile-label"/>
+            <ComboBox fx:id="profileComboBox" prefWidth="160"/>
+            <Button text="+ Add"    onAction="#onAddProfile"/>
+            <Button text="Rename"   onAction="#onRenameProfile"/>
+            <Button text="Delete"   onAction="#onDeleteProfile"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Edit Tiles" onAction="#onOpenEditor" styleClass="button-primary"/>
+            <Button text="Settings"   onAction="#onOpenSettings"/>
+        </HBox>
+    </top>
+    <center>
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="main-scroll">
+            <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+        </ScrollPane>
+    </center>
+</BorderPane>

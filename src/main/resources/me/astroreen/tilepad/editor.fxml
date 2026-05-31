@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import me.astroreen.tilepad.ui.editor.EditorCanvas?>
+<?import me.astroreen.tilepad.ui.editor.TilePropertiesPanel?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="me.astroreen.tilepad.ui.editor.EditorController"
+            stylesheets="@styles/main.css">
+    <top>
+        <HBox styleClass="toolbar" spacing="8" alignment="CENTER_LEFT">
+            <padding><Insets top="8" right="12" bottom="8" left="12"/></padding>
+            <Label text="Profile:"/>
+            <ComboBox fx:id="profileComboBox" prefWidth="160"/>
+            <Button text="+ Profile"       onAction="#onAddProfile"/>
+            <Button text="Delete Profile"  onAction="#onDeleteProfile"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="+ Add Tile"  onAction="#onAddTile"/>
+            <Button text="Remove Tile" onAction="#onRemoveTile"/>
+            <Button text="Save"        onAction="#onSave" styleClass="button-primary"/>
+            <Button text="Cancel"      onAction="#onCancel"/>
+        </HBox>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.68">
+            <ScrollPane fitToWidth="true" fitToHeight="true">
+                <EditorCanvas fx:id="editorCanvas"/>
+            </ScrollPane>
+            <ScrollPane fitToWidth="true">
+                <TilePropertiesPanel fx:id="propertiesPanel"/>
+            </ScrollPane>
+        </SplitPane>
+    </center>
+</BorderPane>
