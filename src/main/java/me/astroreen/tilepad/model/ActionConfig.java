@@ -1,32 +1,18 @@
 package me.astroreen.tilepad.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * Minimal stub for compilation. Full implementation added in Task 4.
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ActionConfig {
     private ActionType type;
     private String value;
-
-    public ActionConfig() {}
-
-    public ActionConfig(ActionType type, String value) {
-        this.type = type;
-        this.value = value;
-    }
-
-    public ActionType getType() {
-        return type;
-    }
-
-    public void setType(ActionType type) {
-        this.type = type;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
 }

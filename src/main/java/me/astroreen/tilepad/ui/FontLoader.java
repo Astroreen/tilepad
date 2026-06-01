@@ -16,6 +16,10 @@ public class FontLoader {
     private static Map<String, String> codepoints = null;
     private static final String FALLBACK_CODEPOINT = "e887"; // help_outline
 
+    private FontLoader() {
+        // Static utility class, prevent instantiation
+    }
+
     /**
      * Load Material Icons Outlined font into JavaFX font registry.
      * Must be called before any Label uses the font family "Material Icons Outlined".

@@ -3,11 +3,13 @@ package me.astroreen.tilepad.service;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import me.astroreen.tilepad.model.ActionConfig;
-import me.astroreen.tilepad.model.ActionType;
+
+import static me.astroreen.tilepad.Tilepad.LOG;
 
 import java.awt.Desktop;
 import java.io.File;
 import java.net.URI;
+import java.util.logging.Level;
 
 public class ActionService {
 
@@ -40,6 +42,7 @@ public class ActionService {
             } catch (Exception e) {
                 showErrorAlert("Action Failed",
                     "Failed to execute action: " + action.getValue() + "\n" + e.getMessage());
+                    LOG.throwing(ActionService.class.getName(), "execute", e);
             }
         }, "action-executor").start();
     }
@@ -55,7 +58,7 @@ public class ActionService {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             Desktop.getDesktop().browse(new URI(url));
         } else {
-            // Fallback for environments without Desktop support (Linux/NixOS)
+            // Fallback for environments without Desktop support (Linux)
             new ProcessBuilder("xdg-open", url).inheritIO().start();
         }
     }
@@ -79,7 +82,8 @@ public class ActionService {
                 alert.showAndWait();
             });
         } catch (IllegalStateException e) {
-            System.err.println("ActionService error: " + header + " — " + content);
+            final String msg = "ActionService error: " + header + " — " + content;
+            LOG.log(Level.WARNING, msg, e);
         }
     }
 }

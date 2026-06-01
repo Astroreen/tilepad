@@ -17,8 +17,12 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Tilepad extends Application {
+
+    public static final Logger LOG = Logger.getLogger("TILEPAD");
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -39,8 +43,11 @@ public class Tilepad extends Application {
                     }
                     Files.copy(is, configFile);
                 }
+                else {
+                    LOG.warning("Default config template not found in resources");
+                }
             } catch (Exception e) {
-                System.err.println("Could not seed default config: " + e.getMessage());
+                LOG.log(Level.WARNING, "Could not seed default config", e);
             }
         }
 

@@ -1,0 +1,82 @@
+{
+  "configPath": "/home/astroreen/Documents/tilepad/tilepad-config.json",
+  "activeProfile": "default",
+  "profiles": [
+    {
+      "name": "default",
+      "gridColumns": 6,
+      "tiles": [
+        {
+          "id": "t1",
+          "col": 0,
+          "row": 0,
+          "colSpan": 4,
+          "rowSpan": 2,
+          "title": "System Health",
+          "icon": {
+            "type": "MATERIAL",
+            "value": "monitoring",
+            "position": "TOP_LEFT"
+          },
+          "textPosition": "BOTTOM_LEFT",
+          "background": {
+            "type": "COLOR",
+            "value": "#212b39"
+          },
+          "action": {
+            "type": "COMMAND",
+            "value": "htop"
+          }
+        },
+        {
+          "id": "t2",
+          "col": 4,
+          "row": 0,
+          "colSpan": 1,
+          "rowSpan": 1,
+          "title": "Main Power",
+          "icon": {
+            "type": "MATERIAL",
+            "value": "power_settings_new",
+            "position": "TOP_LEFT"
+          },
+          "textPosition": "BOTTOM_LEFT",
+          "background": {
+            "type": "COLOR",
+            "value": "#16202e"
+          },
+          "action": {
+            "type": "COMMAND",
+            "value": "echo power"
+          }
+        },
+        {
+          "id": "t3",
+          "col": 5,
+          "row": 0,
+          "colSpan": 1,
+          "rowSpan": 1,
+          "title": "",
+          "icon": {
+            "type": "MATERIAL",
+            "value": "lightbulb",
+            "position": "CENTER"
+          },
+          "textPosition": "UNDER_ICON",
+          "background": {
+            "type": "COLOR",
+            "value": "#16202e"
+          },
+          "action": {
+            "type": "URL",
+            "value": "https://example.com"
+          }
+        }
+      ]
+    }
+  ],
+  "windowX": 529.0,
+  "windowY": 200.0,
+  "windowWidth": 1280.0,
+  "windowHeight": 800.0
+}

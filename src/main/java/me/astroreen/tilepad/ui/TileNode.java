@@ -78,7 +78,7 @@ public class TileNode extends StackPane {
             gradientOverlay.setMinHeight(getPrefHeight());
 
             getChildren().addAll(imageView, gradientOverlay);
-        } catch (Exception e) {
+        } catch (Exception _) {
             setStyle("-fx-background-color: #16202e; -fx-background-radius: 12px;");
         }
     }

@@ -3,6 +3,11 @@ package me.astroreen.tilepad.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ProfileConfig {
     private String name;
     private int gridColumns = 6;
@@ -20,29 +25,5 @@ public class ProfileConfig {
         this.name = name;
         this.gridColumns = gridColumns;
         this.tiles = tiles != null ? tiles : new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getGridColumns() {
-        return gridColumns;
-    }
-
-    public void setGridColumns(int gridColumns) {
-        this.gridColumns = gridColumns;
-    }
-
-    public List<TileConfig> getTiles() {
-        return tiles;
-    }
-
-    public void setTiles(List<TileConfig> tiles) {
-        this.tiles = tiles;
     }
 }

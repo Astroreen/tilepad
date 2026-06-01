@@ -1,11 +1,6 @@
 package me.astroreen.tilepad.service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
-import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import me.astroreen.tilepad.model.AppConfig;
+import static me.astroreen.tilepad.Tilepad.LOG;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,6 +8,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import me.astroreen.tilepad.model.AppConfig;
 
 public class ConfigService {
 
@@ -25,7 +29,8 @@ public class ConfigService {
     /**
      * Load AppConfig from a JSON file.
      * - If file does not exist: return AppConfig.createDefault()
-     * - If JSON is corrupt (JsonSyntaxException): show error Alert + return AppConfig.createDefault()
+     * - If JSON is corrupt (JsonSyntaxException): show error Alert + return
+     * AppConfig.createDefault()
      * - If IO error: show error Alert + return AppConfig.createDefault()
      */
     public AppConfig load(String filePath) {
@@ -42,10 +47,12 @@ public class ConfigService {
         } catch (JsonSyntaxException e) {
             showErrorAlert("Config file is corrupt. Starting with empty config.",
                     "The configuration file at " + filePath + " contains invalid JSON.");
+            LOG.throwing(ConfigService.class.getName(), "load", e);
             return AppConfig.createDefault();
         } catch (IOException e) {
             showErrorAlert("Failed to read config file.",
                     "Could not read: " + filePath + "\n" + e.getMessage());
+            LOG.throwing(ConfigService.class.getName(), "load", e);
             return AppConfig.createDefault();
         }
     }
@@ -71,7 +78,8 @@ public class ConfigService {
 
     /**
      * Resolve the effective config file path.
-     * If config.getConfigPath() is blank, use app directory + "/tilepad-config.json"
+     * If config.getConfigPath() is blank, use app directory +
+     * "/tilepad-config.json"
      * Otherwise use config.getConfigPath()
      */
     public String resolveConfigPath(AppConfig config) {
@@ -96,7 +104,8 @@ public class ConfigService {
             }
         } catch (IllegalStateException e) {
             // JavaFX toolkit not initialized (e.g., in unit tests) - log to stderr only
-            System.err.println("ConfigService error: " + header + " - " + content);
+            String msg = "ConfigService error: " + header + " - " + content;
+            LOG.log(Level.WARNING, msg, e);
         }
     }
 
