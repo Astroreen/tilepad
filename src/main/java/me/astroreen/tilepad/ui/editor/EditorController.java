@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class EditorController {
 
     @FXML private ComboBox<String> profileComboBox;
+    @FXML private Button removeTileButton;
     @FXML private EditorCanvas editorCanvas;
     @FXML private TilePropertiesPanel propertiesPanel;
 
@@ -47,7 +49,10 @@ public class EditorController {
             }
         });
 
-        editorCanvas.setOnTileSelected(tile -> propertiesPanel.loadTile(tile));
+        editorCanvas.setOnTileSelected(tile -> {
+            propertiesPanel.loadTile(tile);
+            removeTileButton.setDisable(tile == null);
+        });
         propertiesPanel.setOnChange(() -> hasUnsavedChanges = true);
 
         stage.setOnCloseRequest(e -> {
@@ -60,6 +65,7 @@ public class EditorController {
             }
         });
 
+        removeTileButton.setDisable(true);
         loadCurrentProfile();
     }
 
@@ -95,11 +101,12 @@ public class EditorController {
         confirm.setTitle("Remove Tile");
         confirm.setHeaderText("Remove tile '" + selected.getTitle() + "'?");
         confirm.showAndWait().ifPresent(result -> {
-            if (result == ButtonType.OK) {
-                editorCanvas.removeTile(selected);
-                propertiesPanel.clear();
-                hasUnsavedChanges = true;
-            }
+                if (result == ButtonType.OK) {
+                    editorCanvas.removeTile(selected);
+                    propertiesPanel.clear();
+                    removeTileButton.setDisable(true);
+                    hasUnsavedChanges = true;
+                }
         });
     }
 
@@ -133,6 +140,26 @@ public class EditorController {
     }
 
     @FXML
+    private void onRenameProfile() {
+        String current = appConfig.getActiveProfile();
+        TextInputDialog dialog = new TextInputDialog(current);
+        dialog.setTitle("Rename Profile");
+        dialog.setHeaderText("Rename profile '" + current + "':");
+        dialog.setContentText("New name:");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(newName -> {
+            if (newName.isBlank()) return;
+            ProfileConfig profile = getActiveProfile();
+            if (profile != null) {
+                profile.setName(newName);
+                appConfig.setActiveProfile(newName);
+                refreshProfileComboBox();
+                profileComboBox.setValue(newName);
+            }
+        });
+    }
+
+    @FXML
     private void onDeleteProfile() {
         if (appConfig.getProfiles().size() <= 1) {
             new Alert(Alert.AlertType.WARNING, "Cannot delete the last profile.").showAndWait();
@@ -148,9 +175,24 @@ public class EditorController {
         hasUnsavedChanges = true;
     }
 
+    @FXML
+    private void onOpenConfigSettings() {
+        String current = appConfig.getConfigPath() != null ? appConfig.getConfigPath() : "";
+        TextInputDialog dialog = new TextInputDialog(current);
+        dialog.setTitle("Config Path");
+        dialog.setHeaderText("Config file path:");
+        dialog.setContentText("Path (blank = default ./tilepad-config.json):");
+        dialog.getEditor().setPrefWidth(380);
+        dialog.showAndWait().ifPresent(path -> {
+            appConfig.setConfigPath(path.trim());
+            hasUnsavedChanges = true;
+        });
+    }
+
     private void loadCurrentProfile() {
         editorCanvas.loadProfile(getActiveProfile());
         propertiesPanel.clear();
+        removeTileButton.setDisable(true);
     }
 
     private void refreshProfileComboBox() {

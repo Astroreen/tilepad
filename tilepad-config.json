@@ -11,7 +11,7 @@
           "col": 0,
           "row": 0,
           "colSpan": 4,
-          "rowSpan": 2,
+          "rowSpan": 1,
           "title": "System Health",
           "icon": {
             "type": "MATERIAL",
@@ -24,14 +24,14 @@
             "value": "#212b39"
           },
           "action": {
-            "type": "COMMAND",
+            "type": "APP",
             "value": "htop"
           }
         },
         {
           "id": "t2",
-          "col": 4,
-          "row": 0,
+          "col": 0,
+          "row": 1,
           "colSpan": 1,
           "rowSpan": 1,
           "title": "Main Power",
@@ -52,8 +52,8 @@
         },
         {
           "id": "t3",
-          "col": 5,
-          "row": 0,
+          "col": 3,
+          "row": 1,
           "colSpan": 1,
           "rowSpan": 1,
           "title": "",
@@ -75,8 +75,8 @@
       ]
     }
   ],
-  "windowX": 529.0,
-  "windowY": 200.0,
-  "windowWidth": 1280.0,
-  "windowHeight": 800.0
+  "windowX": 106.0,
+  "windowY": 530.0,
+  "windowWidth": 813.0,
+  "windowHeight": 326.0
 }

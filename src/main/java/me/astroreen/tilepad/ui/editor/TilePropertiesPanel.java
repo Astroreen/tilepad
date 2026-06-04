@@ -41,7 +41,7 @@ public class TilePropertiesPanel extends VBox {
     public TilePropertiesPanel() {
         setSpacing(8);
         setPadding(new Insets(12));
-        getStyleClass().add("properties-panel");
+        getStyleClass().addAll("properties-panel", "dark-panel");
 
         colSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 99, 0));
         rowSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 99, 0));

@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -12,19 +11,24 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="me.astroreen.tilepad.ui.MainController"
             stylesheets="@styles/main.css">
-    <top>
-        <HBox styleClass="profile-bar" spacing="8" alignment="CENTER_LEFT">
-            <padding><Insets top="8" right="12" bottom="8" left="12"/></padding>
-            <Label text="Profile:" styleClass="profile-label"/>
-            <ComboBox fx:id="profileComboBox" prefWidth="160"/>
-            <Button text="+ Add"    onAction="#onAddProfile"/>
-            <Button text="Rename"   onAction="#onRenameProfile"/>
-            <Button text="Delete"   onAction="#onDeleteProfile"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Edit Tiles" onAction="#onOpenEditor" styleClass="button-primary"/>
-            <Button text="Settings"   onAction="#onOpenSettings"/>
-        </HBox>
-    </top>
+    <bottom>
+        <BorderPane styleClass="bottom-bar">
+            <padding><Insets top="6" right="8" bottom="6" left="8"/></padding>
+            <left>
+                <Button text="⚙" styleClass="icon-button" onAction="#onOpenEditor"/>
+            </left>
+            <center>
+                <HBox alignment="CENTER" spacing="8">
+                    <Button text="&#60;" styleClass="nav-button" onAction="#onPrevProfile"/>
+                    <Label fx:id="profileNameLabel" styleClass="profile-name-label" minWidth="120" alignment="CENTER"/>
+                    <Button text="&#62;" styleClass="nav-button" onAction="#onNextProfile"/>
+                </HBox>
+            </center>
+            <right>
+                <Region minWidth="36"/>
+            </right>
+        </BorderPane>
+    </bottom>
     <center>
         <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="main-scroll">
             <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>

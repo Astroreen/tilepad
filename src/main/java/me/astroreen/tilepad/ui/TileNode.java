@@ -31,6 +31,7 @@ public class TileNode extends StackPane {
         setPrefHeight(cellHeight);
         getStyleClass().add("tile");
         setAlignment(Pos.CENTER);
+        setPadding(new Insets(10));
         applyBackground(config.getBackground());
         if (iconService != null) {
             applyIconAndText(iconService);
@@ -115,7 +116,7 @@ public class TileNode extends StackPane {
             if (!title.isBlank()) {
                 Label titleLabel = makeTitleLabel(title);
                 StackPane.setAlignment(titleLabel, resolveTextAlignment(textPos));
-                StackPane.setMargin(titleLabel, new Insets(6));
+                StackPane.setMargin(titleLabel, new Insets(10));
                 getChildren().add(titleLabel);
             }
         }

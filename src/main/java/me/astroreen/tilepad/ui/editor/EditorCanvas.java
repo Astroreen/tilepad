@@ -1,15 +1,21 @@
 package me.astroreen.tilepad.ui.editor;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import me.astroreen.tilepad.model.BackgroundConfig;
 import me.astroreen.tilepad.model.BackgroundType;
+import me.astroreen.tilepad.model.IconPosition;
 import me.astroreen.tilepad.model.ProfileConfig;
+import me.astroreen.tilepad.model.TextPosition;
 import me.astroreen.tilepad.model.TileConfig;
+import me.astroreen.tilepad.service.IconService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +24,7 @@ import java.util.function.Consumer;
 public class EditorCanvas extends AnchorPane {
 
     private final List<TilePreviewNode> previewNodes = new ArrayList<>();
+    private final IconService iconService = new IconService();
     private ProfileConfig currentProfile;
     private Consumer<TileConfig> onTileSelected;
     private TilePreviewNode selectedNode;
@@ -126,19 +133,74 @@ public class EditorCanvas extends AnchorPane {
             setPrefWidth(colSpan * (CELL_WIDTH + GAP) - GAP);
             setPrefHeight(rowSpan * (CELL_HEIGHT + GAP) - GAP);
 
-            Label titleLabel = new Label(tile.getTitle() != null ? tile.getTitle() : "");
-            titleLabel.setStyle("-fx-text-fill: #d9e3f6; -fx-font-size: 14px; -fx-font-weight: bold;");
+            setAlignment(Pos.CENTER);
+            setPadding(new Insets(10));
 
             resizeHandle = new Rectangle(10, 10);
             resizeHandle.setFill(Color.web("#adc6ff"));
-
-            getChildren().addAll(titleLabel, resizeHandle);
             StackPane.setAlignment(resizeHandle, Pos.BOTTOM_RIGHT);
-            setAlignment(Pos.CENTER);
+
+            buildContent();
+            getChildren().add(resizeHandle);
 
             setStyle(getBaseStyle());
             registerTileHandlers();
             registerResizeHandlers();
+        }
+
+        private void buildContent() {
+            String title = tile.getTitle() != null ? tile.getTitle() : "";
+            Label titleLabel = new Label(title);
+            titleLabel.setStyle("-fx-text-fill: #d9e3f6; -fx-font-size: 14px; -fx-font-weight: bold;");
+
+            if (tile.getIcon() != null) {
+                Node iconNode = iconService.createIcon(tile.getIcon(), 32);
+                TextPosition textPos = tile.getTextPosition() != null
+                        ? tile.getTextPosition()
+                        : TextPosition.UNDER_ICON;
+
+                if (textPos == TextPosition.UNDER_ICON) {
+                    VBox content = new VBox(4);
+                    content.setAlignment(Pos.CENTER);
+                    content.getChildren().add(iconNode);
+                    if (!title.isBlank()) {
+                        content.getChildren().add(titleLabel);
+                    }
+                    getChildren().add(content);
+                } else {
+                    Pos iconAlignment = resolveIconAlignment(tile.getIcon().getPosition());
+                    StackPane.setAlignment(iconNode, iconAlignment);
+                    getChildren().add(iconNode);
+                    if (!title.isBlank()) {
+                        StackPane.setAlignment(titleLabel, resolveTextAlignment(textPos));
+                        StackPane.setMargin(titleLabel, new Insets(10));
+                        getChildren().add(titleLabel);
+                    }
+                }
+            } else {
+                getChildren().add(titleLabel);
+            }
+        }
+
+        private Pos resolveIconAlignment(IconPosition pos) {
+            if (pos == null) return Pos.CENTER;
+            return switch (pos) {
+                case TOP_LEFT     -> Pos.TOP_LEFT;
+                case TOP_RIGHT    -> Pos.TOP_RIGHT;
+                case BOTTOM_LEFT  -> Pos.BOTTOM_LEFT;
+                case BOTTOM_RIGHT -> Pos.BOTTOM_RIGHT;
+                case CENTER       -> Pos.CENTER;
+            };
+        }
+
+        private Pos resolveTextAlignment(TextPosition pos) {
+            return switch (pos) {
+                case TOP_LEFT     -> Pos.TOP_LEFT;
+                case TOP_RIGHT    -> Pos.TOP_RIGHT;
+                case BOTTOM_LEFT  -> Pos.BOTTOM_LEFT;
+                case BOTTOM_RIGHT -> Pos.BOTTOM_RIGHT;
+                default           -> Pos.CENTER;
+            };
         }
 
         private void registerTileHandlers() {

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,14 +20,28 @@
         <HBox styleClass="toolbar" spacing="8" alignment="CENTER_LEFT">
             <padding><Insets top="8" right="12" bottom="8" left="12"/></padding>
             <Label text="Profile:"/>
-            <ComboBox fx:id="profileComboBox" prefWidth="160"/>
-            <Button text="+ Profile"       onAction="#onAddProfile"/>
-            <Button text="Delete Profile"  onAction="#onDeleteProfile"/>
+            <ComboBox fx:id="profileComboBox" prefWidth="140"/>
+            <Button styleClass="editor-icon-btn" text="&#xE145;" onAction="#onAddProfile">
+                <tooltip><Tooltip text="Add Profile"/></tooltip>
+            </Button>
+            <Button styleClass="editor-icon-btn" text="&#xE3C9;" onAction="#onRenameProfile">
+                <tooltip><Tooltip text="Rename Profile"/></tooltip>
+            </Button>
+            <Button styleClass="editor-icon-btn" text="&#xE15B;" onAction="#onDeleteProfile">
+                <tooltip><Tooltip text="Delete Profile"/></tooltip>
+            </Button>
+            <Button styleClass="editor-icon-btn" text="&#xE8B8;" onAction="#onOpenConfigSettings">
+                <tooltip><Tooltip text="Config Path Settings"/></tooltip>
+            </Button>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button text="+ Add Tile"  onAction="#onAddTile"/>
-            <Button text="Remove Tile" onAction="#onRemoveTile"/>
-            <Button text="Save"        onAction="#onSave" styleClass="button-primary"/>
-            <Button text="Cancel"      onAction="#onCancel"/>
+            <Button styleClass="editor-icon-btn" text="&#xE146;" onAction="#onAddTile">
+                <tooltip><Tooltip text="Add Tile"/></tooltip>
+            </Button>
+            <Button fx:id="removeTileButton" styleClass="editor-icon-btn" text="&#xE872;" onAction="#onRemoveTile" disable="true">
+                <tooltip><Tooltip text="Remove Tile"/></tooltip>
+            </Button>
+            <Button text="Save"   onAction="#onSave" styleClass="button-primary"/>
+            <Button text="Cancel" onAction="#onCancel"/>
         </HBox>
     </top>
     <center>

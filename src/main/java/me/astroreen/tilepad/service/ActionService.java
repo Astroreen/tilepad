@@ -48,8 +48,7 @@ public class ActionService {
     }
 
     private void executeCommand(String command) throws Exception {
-        String[] parts = command.split("\\s+");
-        new ProcessBuilder(parts)
+        new ProcessBuilder("zsh", "-i", "-c", command)
             .inheritIO()
             .start();
     }
@@ -64,11 +63,16 @@ public class ActionService {
     }
 
     private void executeApp(String path) throws Exception {
-        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
-            Desktop.getDesktop().open(new File(path));
+        File file = new File(path);
+        if (file.exists()) {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
+                Desktop.getDesktop().open(file);
+            } else {
+                // Fallback: xdg-open for Linux
+                new ProcessBuilder("xdg-open", path).inheritIO().start();
+            }
         } else {
-            // Fallback: xdg-open for Linux
-            new ProcessBuilder("xdg-open", path).inheritIO().start();
+            executeCommand(path);
         }
     }
 

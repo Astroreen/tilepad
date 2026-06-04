@@ -78,35 +78,62 @@
     -fx-background-color: #091421;
 }
 
-/* Profile bar at top */
-.profile-bar {
+/* Bottom navigation bar */
+.bottom-bar {
     -fx-background-color: #121c2a;
-    -fx-padding: 8 16 8 16;
-    -fx-spacing: 8;
-    -fx-alignment: center-left;
+    -fx-padding: 6 8 6 8;
+    -fx-min-height: 44px;
+    -fx-pref-height: 44px;
 }
 
-/* Profile label */
-.profile-label {
+/* Settings gear button */
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #c2c6d6;
+    -fx-font-size: 18px;
+    -fx-padding: 4 8 4 8;
+    -fx-cursor: hand;
+    -fx-background-radius: 6px;
+    -fx-border-width: 0;
+}
+
+.icon-button:hover {
+    -fx-background-color: #212b39;
+    -fx-text-fill: #d9e3f6;
+}
+
+.icon-button:pressed {
+    -fx-background-color: #2b3544;
+}
+
+/* Profile nav buttons < > */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #c2c6d6;
+    -fx-font-size: 16px;
+    -fx-padding: 4 10 4 10;
+    -fx-cursor: hand;
+    -fx-background-radius: 6px;
+    -fx-border-width: 0;
+    -fx-min-width: 32px;
+}
+
+.nav-button:hover {
+    -fx-background-color: #212b39;
+    -fx-text-fill: #d9e3f6;
+}
+
+.nav-button:pressed {
+    -fx-background-color: #2b3544;
+}
+
+/* Profile name in bottom bar */
+.profile-name-label {
     -fx-text-fill: #d9e3f6;
     -fx-font-size: 13px;
-}
-
-/* ComboBox in profile bar */
-.profile-combo {
-    -fx-pref-width: 160px;
-    -fx-background-color: #212b39;
-    -fx-text-fill: #d9e3f6;
-    -fx-background-radius: 6px;
-}
-
-.profile-combo .list-cell {
-    -fx-text-fill: #d9e3f6;
-    -fx-background-color: #212b39;
-}
-
-.profile-combo:hover {
-    -fx-background-color: #303a48;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-min-width: 120px;
 }
 
 /* Toolbar buttons */
@@ -247,4 +274,79 @@
     -fx-background-radius: 4px;
     -fx-border-color: #424754;
     -fx-border-width: 1px;
+}
+
+/* SplitPane dark theme */
+.split-pane {
+    -fx-background-color: #091421;
+    -fx-padding: 0;
+}
+
+.split-pane > .split-pane-divider {
+    -fx-background-color: #424754;
+    -fx-padding: 0 1 0 1;
+}
+
+/* Generic ScrollPane dark (used in editor) */
+.scroll-pane {
+    -fx-background-color: #091421;
+    -fx-background: #091421;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: #091421;
+}
+
+/* Dark panel (TilePropertiesPanel, editor right side) */
+.dark-panel {
+    -fx-background-color: #091421;
+    -fx-padding: 12;
+}
+
+/* Material icon buttons in editor toolbar */
+.editor-icon-btn {
+    -fx-background-color: #212b39;
+    -fx-text-fill: #c2c6d6;
+    -fx-font-family: "Material Icons Outlined";
+    -fx-font-size: 18px;
+    -fx-padding: 4 8 4 8;
+    -fx-cursor: hand;
+    -fx-background-radius: 6px;
+    -fx-border-width: 0;
+    -fx-min-width: 34px;
+    -fx-min-height: 30px;
+}
+
+.editor-icon-btn:hover {
+    -fx-background-color: #303a48;
+    -fx-text-fill: #d9e3f6;
+}
+
+.editor-icon-btn:pressed {
+    -fx-background-color: #2b3544;
+}
+
+.editor-icon-btn:disabled {
+    -fx-opacity: 0.35;
+    -fx-cursor: default;
+}
+
+.editor-icon-btn-danger {
+    -fx-text-fill: #ffb4ab;
+}
+
+/* Editor / main toolbar */
+.toolbar {
+    -fx-background-color: #121c2a;
+}
+
+.toolbar .label {
+    -fx-text-fill: #d9e3f6;
+    -fx-font-size: 13px;
+}
+
+.editor-icon-btn-danger:hover {
+    -fx-background-color: #3a2020;
+    -fx-text-fill: #ffb4ab;
 }
