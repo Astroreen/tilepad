@@ -8,8 +8,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class FontLoader {
 
@@ -59,6 +61,11 @@ public class FontLoader {
             // Return help_outline fallback char
             return String.valueOf((char) Integer.parseInt(FALLBACK_CODEPOINT, 16));
         }
+    }
+
+    public static Set<String> getIconNames() {
+        if (codepoints == null) loadCodepoints();
+        return Collections.unmodifiableSet(codepoints.keySet());
     }
 
     private static void loadCodepoints() {

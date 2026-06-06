@@ -100,6 +100,15 @@ public class EditorCanvas extends AnchorPane {
         }
     }
 
+    public void refreshTile(TileConfig tile) {
+        for (TilePreviewNode node : previewNodes) {
+            if (node.getTile() == tile) {
+                node.refresh();
+                return;
+            }
+        }
+    }
+
     private TilePreviewNode createPreviewNode(TileConfig tile) {
         TilePreviewNode node = new TilePreviewNode(tile);
         double x = tile.getCol() * (CELL_WIDTH + GAP);
@@ -277,6 +286,22 @@ public class EditorCanvas extends AnchorPane {
                 setPrefHeight(newRowSpan * (CELL_HEIGHT + GAP) - GAP);
                 e.consume();
             });
+        }
+
+        void refresh() {
+            getChildren().removeIf(c -> c != resizeHandle);
+            buildContent();
+            int colSpan = Math.max(1, tile.getColSpan());
+            int rowSpan = Math.max(1, tile.getRowSpan());
+            setPrefWidth(colSpan * (CELL_WIDTH + GAP) - GAP);
+            setPrefHeight(rowSpan * (CELL_HEIGHT + GAP) - GAP);
+            AnchorPane.setLeftAnchor(this, tile.getCol() * (CELL_WIDTH + GAP));
+            AnchorPane.setTopAnchor(this, tile.getRow() * (CELL_HEIGHT + GAP));
+            if (selectedNode == this) {
+                setStyle(getBaseStyle() + "-fx-border-color: #4f93ff; -fx-border-width: 2px;");
+            } else {
+                setStyle(getBaseStyle());
+            }
         }
 
         private String getBaseStyle() {

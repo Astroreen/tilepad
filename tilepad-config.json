@@ -34,10 +34,10 @@
           "row": 1,
           "colSpan": 1,
           "rowSpan": 1,
-          "title": "Main Power",
+          "title": "Start Work",
           "icon": {
             "type": "MATERIAL",
-            "value": "power_settings_new",
+            "value": "router",
             "position": "TOP_LEFT"
           },
           "textPosition": "BOTTOM_LEFT",
@@ -47,7 +47,7 @@
           },
           "action": {
             "type": "COMMAND",
-            "value": "echo power"
+            "value": "nixconfig \u0026\u0026 ds -- start-work"
           }
         },
         {
@@ -62,7 +62,7 @@
             "value": "lightbulb",
             "position": "CENTER"
           },
-          "textPosition": "UNDER_ICON",
+          "textPosition": "TOP_LEFT",
           "background": {
             "type": "COLOR",
             "value": "#16202e"
@@ -71,12 +71,34 @@
             "type": "URL",
             "value": "https://example.com"
           }
+        },
+        {
+          "id": "196e4a8f-0ed8-43f1-8ac5-f33633e88f70",
+          "col": 1,
+          "row": 1,
+          "colSpan": 1,
+          "rowSpan": 1,
+          "title": "Stop Work",
+          "icon": {
+            "type": "MATERIAL",
+            "value": "restart_alt",
+            "position": "CENTER"
+          },
+          "textPosition": "UNDER_ICON",
+          "background": {
+            "type": "COLOR",
+            "value": "#16202e"
+          },
+          "action": {
+            "type": "COMMAND",
+            "value": "nixconfig \u0026\u0026 ds -- end-work"
+          }
         }
       ]
     }
   ],
-  "windowX": 106.0,
-  "windowY": 530.0,
+  "windowX": 126.0,
+  "windowY": 377.0,
   "windowWidth": 813.0,
   "windowHeight": 326.0
 }

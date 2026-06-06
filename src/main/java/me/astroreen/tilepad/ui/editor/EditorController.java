@@ -8,7 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
+import me.astroreen.tilepad.model.ActionConfig;
 import me.astroreen.tilepad.model.AppConfig;
+import me.astroreen.tilepad.model.BackgroundConfig;
+import me.astroreen.tilepad.model.IconConfig;
 import me.astroreen.tilepad.model.ProfileConfig;
 import me.astroreen.tilepad.model.TileConfig;
 
@@ -27,6 +30,7 @@ public class EditorController {
     private Stage stage;
     private Runnable onSaveCallback;
     private boolean hasUnsavedChanges = false;
+    private TileConfig tileSnapshot;
 
     public void initialize(AppConfig appConfig, Stage stage, Runnable onSaveCallback) {
         this.appConfig = appConfig;
@@ -50,10 +54,16 @@ public class EditorController {
         });
 
         editorCanvas.setOnTileSelected(tile -> {
+            tileSnapshot = tile != null ? deepCopy(tile) : null;
             propertiesPanel.loadTile(tile);
             removeTileButton.setDisable(tile == null);
         });
-        propertiesPanel.setOnChange(() -> hasUnsavedChanges = true);
+        propertiesPanel.setOnChange(() -> {
+            hasUnsavedChanges = true;
+            TileConfig t = propertiesPanel.getCurrentTile();
+            if (t != null) editorCanvas.refreshTile(t);
+        });
+        propertiesPanel.setOwnerStage(stage);
 
         stage.setOnCloseRequest(e -> {
             if (hasUnsavedChanges) {
@@ -118,7 +128,14 @@ public class EditorController {
 
     @FXML
     private void onCancel() {
-        if (hasUnsavedChanges && !confirmDiscardChanges()) return;
+        if (hasUnsavedChanges) {
+            TileConfig current = propertiesPanel.getCurrentTile();
+            if (current != null && tileSnapshot != null) {
+                restoreSnapshot(current, tileSnapshot);
+                editorCanvas.refreshTile(current);
+            }
+            if (!confirmDiscardChanges()) return;
+        }
         stage.close();
     }
 
@@ -209,6 +226,51 @@ public class EditorController {
                 .filter(p -> active.equals(p.getName()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    private static TileConfig deepCopy(TileConfig src) {
+        if (src == null) return null;
+        TileConfig copy = new TileConfig();
+        copy.setId(src.getId());
+        copy.setCol(src.getCol());
+        copy.setRow(src.getRow());
+        copy.setColSpan(src.getColSpan());
+        copy.setRowSpan(src.getRowSpan());
+        copy.setTitle(src.getTitle());
+        copy.setTextPosition(src.getTextPosition());
+        if (src.getIcon() != null) {
+            IconConfig ic = new IconConfig();
+            ic.setType(src.getIcon().getType());
+            ic.setValue(src.getIcon().getValue());
+            ic.setPosition(src.getIcon().getPosition());
+            copy.setIcon(ic);
+        }
+        if (src.getBackground() != null) {
+            BackgroundConfig bg = new BackgroundConfig();
+            bg.setType(src.getBackground().getType());
+            bg.setValue(src.getBackground().getValue());
+            copy.setBackground(bg);
+        }
+        if (src.getAction() != null) {
+            ActionConfig ac = new ActionConfig();
+            ac.setType(src.getAction().getType());
+            ac.setValue(src.getAction().getValue());
+            copy.setAction(ac);
+        }
+        return copy;
+    }
+
+    private static void restoreSnapshot(TileConfig target, TileConfig src) {
+        target.setId(src.getId());
+        target.setCol(src.getCol());
+        target.setRow(src.getRow());
+        target.setColSpan(src.getColSpan());
+        target.setRowSpan(src.getRowSpan());
+        target.setTitle(src.getTitle());
+        target.setTextPosition(src.getTextPosition());
+        target.setIcon(src.getIcon());
+        target.setBackground(src.getBackground());
+        target.setAction(src.getAction());
     }
 
     private boolean confirmDiscardChanges() {

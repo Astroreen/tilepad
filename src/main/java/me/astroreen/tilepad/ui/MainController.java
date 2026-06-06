@@ -25,7 +25,6 @@ public class MainController {
     private AppConfig appConfig;
     private ConfigService configService;
     private ActionService actionService;
-    private Stage stage;
     private TileGridPane tileGridPane;
 
     public void initialize(AppConfig appConfig, ConfigService configService,
@@ -33,7 +32,6 @@ public class MainController {
         this.appConfig = appConfig;
         this.configService = configService;
         this.actionService = actionService;
-        this.stage = stage;
 
         tileGridPane = new TileGridPane();
         scrollPane.setContent(tileGridPane);
@@ -102,11 +100,6 @@ public class MainController {
         } catch (IOException e) {
             showError("Failed to open editor: " + e.getMessage());
         }
-    }
-
-    private void onOpenSettings() {
-        SettingsDialog.show(appConfig, config ->
-                configService.save(config, configService.resolveConfigPath(config)));
     }
 
     private ProfileConfig getActiveProfile() {

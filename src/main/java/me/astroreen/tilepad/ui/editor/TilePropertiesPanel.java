@@ -1,14 +1,25 @@
 package me.astroreen.tilepad.ui.editor;
 
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import me.astroreen.tilepad.model.ActionConfig;
 import me.astroreen.tilepad.model.ActionType;
 import me.astroreen.tilepad.model.BackgroundConfig;
@@ -19,24 +30,33 @@ import me.astroreen.tilepad.model.IconType;
 import me.astroreen.tilepad.model.TextPosition;
 import me.astroreen.tilepad.model.TileConfig;
 
+import java.io.File;
+
 public class TilePropertiesPanel extends VBox {
 
     private TileConfig currentTile;
     private Runnable onChange;
+    private Stage ownerStage;
 
-    private final TextField titleField               = new TextField();
-    private final Spinner<Integer> colSpinner        = new Spinner<>();
-    private final Spinner<Integer> rowSpinner        = new Spinner<>();
-    private final Spinner<Integer> colSpanSpinner    = new Spinner<>();
-    private final Spinner<Integer> rowSpanSpinner    = new Spinner<>();
-    private final ComboBox<TextPosition> textPosCombo = new ComboBox<>();
-    private final ComboBox<IconType> iconTypeCombo   = new ComboBox<>();
-    private final TextField iconValueField           = new TextField();
-    private final ComboBox<IconPosition> iconPosCombo = new ComboBox<>();
+    private final TextField titleField                 = new TextField();
+    private final Spinner<Integer> colSpinner          = new Spinner<>();
+    private final Spinner<Integer> rowSpinner          = new Spinner<>();
+    private final Spinner<Integer> colSpanSpinner      = new Spinner<>();
+    private final Spinner<Integer> rowSpanSpinner      = new Spinner<>();
+    private final ComboBox<TextPosition> textPosCombo  = new ComboBox<>();
+    private final ComboBox<IconType> iconTypeCombo     = new ComboBox<>();
+    private final Button iconBrowseButton              = new Button("(none)");
+    private String currentIconValue                    = "";
+    private final ComboBox<IconPosition> iconPosCombo  = new ComboBox<>();
     private final ComboBox<BackgroundType> bgTypeCombo = new ComboBox<>();
-    private final TextField bgValueField             = new TextField();
+    private final TextField bgValueField               = new TextField();
+    private final Button bgBrowseButton                = new Button("Browse\u2026");
+    private final Popup bgColorPopup                   = new Popup();
+    private final ColorPicker bgColorPicker            = new ColorPicker();
+    private boolean updatingColor                      = false;
     private final ComboBox<ActionType> actionTypeCombo = new ComboBox<>();
-    private final TextField actionValueField         = new TextField();
+    private final TextField actionValueField           = new TextField();
+    private final Button actionBrowseButton            = new Button("Browse\u2026");
 
     public TilePropertiesPanel() {
         setSpacing(8);
@@ -58,13 +78,33 @@ public class TilePropertiesPanel extends VBox {
         bgTypeCombo.getItems().setAll(BackgroundType.values());
         actionTypeCombo.getItems().setAll(ActionType.values());
 
-        iconValueField.setPromptText("e.g. home or /path/to/icon.png");
         bgValueField.setPromptText("e.g. #1a2b3c or /path/to/bg.jpg");
         actionValueField.setPromptText("command, URL, or file path");
+
+        iconBrowseButton.setMaxWidth(Double.MAX_VALUE);
+
+        bgColorPopup.setAutoHide(true);
+        bgColorPopup.getContent().add(bgColorPicker);
+
+        bgBrowseButton.setMaxWidth(Double.MAX_VALUE);
+        bgBrowseButton.setVisible(false);
+        bgBrowseButton.setManaged(false);
+
+        actionBrowseButton.setVisible(false);
+        actionBrowseButton.setManaged(false);
+
+        HBox actionRow = new HBox(4, actionValueField, actionBrowseButton);
+        HBox.setHgrow(actionValueField, Priority.ALWAYS);
+        actionRow.setAlignment(Pos.CENTER_LEFT);
 
         GridPane grid = new GridPane();
         grid.setHgap(8);
         grid.setVgap(8);
+
+        ColumnConstraints col0 = new ColumnConstraints();
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setHgrow(Priority.ALWAYS);
+        grid.getColumnConstraints().addAll(col0, col1);
 
         int r = 0;
         grid.add(new Label("Title:"), 0, r);        grid.add(titleField, 1, r++);
@@ -74,12 +114,18 @@ public class TilePropertiesPanel extends VBox {
         grid.add(new Label("Row Span:"), 0, r);      grid.add(rowSpanSpinner, 1, r++);
         grid.add(new Label("Text Position:"), 0, r); grid.add(textPosCombo, 1, r++);
         grid.add(new Label("Icon Type:"), 0, r);     grid.add(iconTypeCombo, 1, r++);
-        grid.add(new Label("Icon Value:"), 0, r);    grid.add(iconValueField, 1, r++);
+        grid.add(new Label("Icon Value:"), 0, r);    grid.add(iconBrowseButton, 1, r++);
         grid.add(new Label("Icon Position:"), 0, r); grid.add(iconPosCombo, 1, r++);
+        HBox bgValueCell = new HBox();
+        bgValueCell.getChildren().addAll(bgValueField, bgBrowseButton);
+        HBox.setHgrow(bgValueField, Priority.ALWAYS);
+        HBox.setHgrow(bgBrowseButton, Priority.ALWAYS);
+        bgValueField.setMaxWidth(Double.MAX_VALUE);
+
         grid.add(new Label("BG Type:"), 0, r);       grid.add(bgTypeCombo, 1, r++);
-        grid.add(new Label("BG Value:"), 0, r);      grid.add(bgValueField, 1, r++);
+        grid.add(new Label("BG Value:"), 0, r);      grid.add(bgValueCell, 1, r++);
         grid.add(new Label("Action Type:"), 0, r);   grid.add(actionTypeCombo, 1, r++);
-        grid.add(new Label("Action Value:"), 0, r);  grid.add(actionValueField, 1, r++);
+        grid.add(new Label("Action Value:"), 0, r);  grid.add(actionRow, 1, r++);
 
         Label header = new Label("Tile Properties");
         header.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
@@ -87,6 +133,10 @@ public class TilePropertiesPanel extends VBox {
 
         setDisable(true);
         registerListeners();
+    }
+
+    public void setOwnerStage(Stage stage) {
+        this.ownerStage = stage;
     }
 
     public void setOnChange(Runnable callback) {
@@ -108,12 +158,14 @@ public class TilePropertiesPanel extends VBox {
         if (tile.getIcon() != null) {
             iconTypeCombo.setValue(tile.getIcon().getType() != null
                     ? tile.getIcon().getType() : IconType.MATERIAL);
-            iconValueField.setText(tile.getIcon().getValue() != null ? tile.getIcon().getValue() : "");
+            currentIconValue = tile.getIcon().getValue() != null ? tile.getIcon().getValue() : "";
+            iconBrowseButton.setText(truncate(currentIconValue));
             iconPosCombo.setValue(tile.getIcon().getPosition() != null
                     ? tile.getIcon().getPosition() : IconPosition.CENTER);
         } else {
             iconTypeCombo.setValue(IconType.MATERIAL);
-            iconValueField.setText("");
+            currentIconValue = "";
+            iconBrowseButton.setText("(none)");
             iconPosCombo.setValue(IconPosition.CENTER);
         }
 
@@ -136,15 +188,21 @@ public class TilePropertiesPanel extends VBox {
             actionTypeCombo.setValue(ActionType.COMMAND);
             actionValueField.setText("");
         }
+
+        updateActionBrowseVisibility(actionTypeCombo.getValue());
+        updateBgTypeControls(bgTypeCombo.getValue());
     }
 
     public void clear() {
         this.currentTile = null;
         setDisable(true);
         titleField.clear();
-        iconValueField.clear();
+        currentIconValue = "";
+        iconBrowseButton.setText("(none)");
         bgValueField.clear();
         actionValueField.clear();
+        bgColorPopup.hide();
+        updateBgTypeControls(BackgroundType.COLOR);
     }
 
     public TileConfig getCurrentTile() {
@@ -171,26 +229,139 @@ public class TilePropertiesPanel extends VBox {
             if (currentTile != null && n != null) { currentTile.setTextPosition(n); notifyChange(); }
         });
         iconTypeCombo.valueProperty().addListener((obs, o, n) -> {
-            if (currentTile != null && n != null) { ensureIcon(); currentTile.getIcon().setType(n); notifyChange(); }
-        });
-        iconValueField.textProperty().addListener((obs, o, n) -> {
-            if (currentTile != null) { ensureIcon(); currentTile.getIcon().setValue(n); notifyChange(); }
+            if (currentTile != null && n != null) {
+                ensureIcon();
+                currentTile.getIcon().setType(n);
+                currentIconValue = "";
+                currentTile.getIcon().setValue("");
+                iconBrowseButton.setText("(none)");
+                notifyChange();
+            }
         });
         iconPosCombo.valueProperty().addListener((obs, o, n) -> {
             if (currentTile != null && n != null) { ensureIcon(); currentTile.getIcon().setPosition(n); notifyChange(); }
         });
         bgTypeCombo.valueProperty().addListener((obs, o, n) -> {
             if (currentTile != null && n != null) { ensureBg(); currentTile.getBackground().setType(n); notifyChange(); }
+            updateBgTypeControls(n);
         });
         bgValueField.textProperty().addListener((obs, o, n) -> {
             if (currentTile != null) { ensureBg(); currentTile.getBackground().setValue(n); notifyChange(); }
+            if (!updatingColor && bgColorPopup.isShowing()) {
+                updatingColor = true;
+                try { bgColorPicker.setValue(Color.web(n)); } catch (Exception ex) { /* invalid hex, skip */ }
+                updatingColor = false;
+            }
+        });
+        bgColorPicker.valueProperty().addListener((obs, o, n) -> {
+            if (!updatingColor && n != null) {
+                updatingColor = true;
+                bgValueField.setText(colorToHex(n));
+                updatingColor = false;
+            }
+        });
+        bgValueField.focusedProperty().addListener((obs, o, focused) -> {
+            if (focused && bgTypeCombo.getValue() == BackgroundType.COLOR) {
+                try { bgColorPicker.setValue(Color.web(bgValueField.getText())); }
+                catch (Exception ex) { bgColorPicker.setValue(Color.web("#16202e")); }
+                Bounds bounds = bgValueField.localToScreen(bgValueField.getBoundsInLocal());
+                if (bounds != null) {
+                    bgColorPopup.show(bgValueField, bounds.getMinX(), bounds.getMaxY() + 2);
+                }
+            }
         });
         actionTypeCombo.valueProperty().addListener((obs, o, n) -> {
             if (currentTile != null && n != null) { ensureAction(); currentTile.getAction().setType(n); notifyChange(); }
+            updateActionBrowseVisibility(n);
         });
         actionValueField.textProperty().addListener((obs, o, n) -> {
-            if (currentTile != null) { ensureAction(); currentTile.getAction().setValue(n); notifyChange(); }
+            if (currentTile != null) {
+                ensureAction();
+                if (currentTile.getAction().getType() == null) {
+                    currentTile.getAction().setType(actionTypeCombo.getValue());
+                }
+                currentTile.getAction().setValue(n);
+                notifyChange();
+            }
         });
+
+        iconBrowseButton.setOnAction(e -> {
+            if (ownerStage == null) return;
+            IconType type = iconTypeCombo.getValue();
+            if (type == IconType.MATERIAL) {
+                IconPickerDialog dialog = new IconPickerDialog(ownerStage);
+                dialog.showAndWait().ifPresent(name -> {
+                    currentIconValue = name;
+                    iconBrowseButton.setText(truncate(name));
+                    if (currentTile != null) { ensureIcon(); currentTile.getIcon().setValue(name); notifyChange(); }
+                });
+            } else {
+                FileChooser chooser = new FileChooser();
+                chooser.setTitle("Select Icon Image");
+                chooser.getExtensionFilters().add(
+                        new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.svg", "*.gif"));
+                File file = chooser.showOpenDialog(ownerStage);
+                if (file != null) {
+                    String path = file.getAbsolutePath();
+                    currentIconValue = path;
+                    iconBrowseButton.setText(truncate(path));
+                    if (currentTile != null) { ensureIcon(); currentTile.getIcon().setValue(path); notifyChange(); }
+                }
+            }
+        });
+
+        actionBrowseButton.setOnAction(e -> {
+            if (ownerStage == null) return;
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Select Application");
+            File file = chooser.showOpenDialog(ownerStage);
+            if (file != null) {
+                actionValueField.setText(file.getAbsolutePath());
+            }
+        });
+
+        bgBrowseButton.setOnAction(e -> {
+            if (ownerStage == null) return;
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Select Background Image");
+            chooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp"));
+            File file = chooser.showOpenDialog(ownerStage);
+            if (file != null) {
+                String path = file.getAbsolutePath();
+                bgValueField.setText(path);
+                if (currentTile != null) { ensureBg(); currentTile.getBackground().setValue(path); notifyChange(); }
+            }
+        });
+    }
+
+    private void updateActionBrowseVisibility(ActionType type) {
+        boolean show = type == ActionType.APP;
+        actionBrowseButton.setVisible(show);
+        actionBrowseButton.setManaged(show);
+    }
+
+    private void updateBgTypeControls(BackgroundType type) {
+        boolean isImage = type == BackgroundType.IMAGE;
+        bgValueField.setVisible(!isImage);
+        bgValueField.setManaged(!isImage);
+        bgBrowseButton.setVisible(isImage);
+        bgBrowseButton.setManaged(isImage);
+        if (isImage && bgColorPopup.isShowing()) {
+            bgColorPopup.hide();
+        }
+    }
+
+    private String truncate(String s) {
+        if (s == null || s.isEmpty()) return "(none)";
+        return s.length() > 20 ? s.substring(0, 17) + "..." : s;
+    }
+
+    private String colorToHex(Color c) {
+        return String.format("#%02x%02x%02x",
+                (int) Math.round(c.getRed() * 255),
+                (int) Math.round(c.getGreen() * 255),
+                (int) Math.round(c.getBlue() * 255));
     }
 
     private void ensureIcon() {

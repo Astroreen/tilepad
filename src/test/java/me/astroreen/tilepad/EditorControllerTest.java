@@ -3,8 +3,6 @@ package me.astroreen.tilepad;
 import me.astroreen.tilepad.model.AppConfig;
 import me.astroreen.tilepad.model.ProfileConfig;
 import me.astroreen.tilepad.model.TileConfig;
-import me.astroreen.tilepad.model.ActionConfig;
-import me.astroreen.tilepad.model.ActionType;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
