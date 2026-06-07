@@ -37,6 +37,7 @@ public class TilePropertiesPanel extends VBox {
     private TileConfig currentTile;
     private Runnable onChange;
     private Stage ownerStage;
+    private boolean loading = false;
 
     private final TextField titleField                 = new TextField();
     private final Spinner<Integer> colSpinner          = new Spinner<>();
@@ -144,6 +145,7 @@ public class TilePropertiesPanel extends VBox {
     }
 
     public void loadTile(TileConfig tile) {
+        loading = true;
         this.currentTile = tile;
         setDisable(false);
 
@@ -191,6 +193,7 @@ public class TilePropertiesPanel extends VBox {
 
         updateActionBrowseVisibility(actionTypeCombo.getValue());
         updateBgTypeControls(bgTypeCombo.getValue());
+        loading = false;
     }
 
     public void clear() {
@@ -377,6 +380,6 @@ public class TilePropertiesPanel extends VBox {
     }
 
     private void notifyChange() {
-        if (onChange != null) onChange.run();
+        if (!loading && onChange != null) onChange.run();
     }
 }

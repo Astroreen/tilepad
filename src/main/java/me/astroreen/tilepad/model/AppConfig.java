@@ -18,6 +18,7 @@ public class AppConfig {
     private double windowY = 0;
     private double windowWidth = 1280;
     private double windowHeight = 800;
+    private ThemeConfig theme = new ThemeConfig();
 
     /**
      * Creates a default AppConfig with one empty "default" profile.

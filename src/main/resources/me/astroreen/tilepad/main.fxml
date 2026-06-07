@@ -6,26 +6,25 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="me.astroreen.tilepad.ui.MainController"
-            stylesheets="@styles/main.css">
+            stylesheets="@styles/main.css, @styles/tiles.css, @styles/settings.css">
     <bottom>
-        <BorderPane styleClass="bottom-bar">
+        <BorderPane fx:id="bottomBar" styleClass="bottom-bar">
             <padding><Insets top="6" right="8" bottom="6" left="8"/></padding>
             <left>
-                <Button text="⚙" styleClass="icon-button" onAction="#onOpenEditor"/>
+                <Button fx:id="editorButton" text="&#xE3C9;" styleClass="editor-icon-btn" onAction="#onOpenEditor"/>
             </left>
             <center>
-                <HBox alignment="CENTER" spacing="8">
+                <HBox fx:id="profileNavBox" alignment="CENTER" spacing="8">
                     <Button text="&#60;" styleClass="nav-button" onAction="#onPrevProfile"/>
                     <Label fx:id="profileNameLabel" styleClass="profile-name-label" minWidth="120" alignment="CENTER"/>
                     <Button text="&#62;" styleClass="nav-button" onAction="#onNextProfile"/>
                 </HBox>
             </center>
             <right>
-                <Region minWidth="36"/>
+                <Button fx:id="settingsButton" text="⚙" styleClass="icon-button" onAction="#onOpenSettings"/>
             </right>
         </BorderPane>
     </bottom>

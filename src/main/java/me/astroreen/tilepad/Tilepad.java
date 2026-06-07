@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import me.astroreen.tilepad.model.AppConfig;
 import me.astroreen.tilepad.service.ActionService;
 import me.astroreen.tilepad.service.ConfigService;
+import me.astroreen.tilepad.service.ThemeService;
 import me.astroreen.tilepad.ui.FontLoader;
 import me.astroreen.tilepad.ui.MainController;
 import me.astroreen.tilepad.ui.SettingsDialog;
@@ -63,8 +64,12 @@ public class Tilepad extends Application {
         stage.setTitle("Tilepad");
         stage.setScene(scene);
 
+        ThemeService themeService = new ThemeService();
+        themeService.init(scene);
+        themeService.apply(appConfig.getTheme());
+
         SettingsDialog.restoreWindowBounds(stage, appConfig);
-        controller.initialize(appConfig, configService, actionService, stage);
+        controller.initialize(appConfig, configService, actionService, themeService, stage);
 
         stage.show();
     }

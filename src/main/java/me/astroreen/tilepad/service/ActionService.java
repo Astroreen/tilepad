@@ -39,7 +39,8 @@ public class ActionService {
         new Thread(() -> {
             try {
                 if (action.getType() == null) {
-                    showErrorAlert("Action Failed", "Action type not configured. Edit the tile and set an action type.");
+                    showErrorAlert("Action Failed",
+                            "Action type not configured. Edit the tile and set an action type.");
                     return;
                 }
                 switch (action.getType()) {
@@ -57,16 +58,17 @@ public class ActionService {
 
     private void executeCommandInTerminal(String command) throws IOException {
         String shell = System.getenv("SHELL");
-        if (shell == null || shell.isBlank()) shell = "zsh";
-        String[] shellCmd = {shell, "-i", "-c", command};
+        if (shell == null || shell.isBlank())
+            shell = "zsh";
+        String[] shellCmd = { shell, "-i", "-c", command };
 
         String[][][] candidates = {
-            {{"kitty"},          shellCmd},
-            {{"alacritty"},      concat(new String[]{"-e"}, shellCmd)},
-            {{"foot"},           shellCmd},
-            {{"xterm"},          concat(new String[]{"-e"}, shellCmd)},
-            {{"gnome-terminal"}, concat(new String[]{"--"}, shellCmd)},
-            {{"konsole"},        concat(new String[]{"-e"}, shellCmd)},
+                { { "kitty" }, shellCmd },
+                { { "alacritty" }, concat(new String[] { "-e" }, shellCmd) },
+                { { "foot" }, shellCmd },
+                { { "xterm" }, concat(new String[] { "-e" }, shellCmd) },
+                { { "gnome-terminal" }, concat(new String[] { "--" }, shellCmd) },
+                { { "konsole" }, concat(new String[] { "-e" }, shellCmd) },
         };
 
         for (String[][] candidate : candidates) {
@@ -78,11 +80,13 @@ public class ActionService {
             try {
                 new ProcessBuilder(fullCmd).start();
                 return;
-            } catch (IOException ignored) {
+            } catch (IOException e) {
+                LOG.throwing(ActionService.class.getName(), "executeCommandInTerminal", e);
             }
         }
 
-        LOG.warning("No terminal emulator found, executing command directly: " + command);
+        String msg = "No terminal emulator found, executing command directly: " + command;
+        LOG.warning(msg);
         executeCommand(command);
     }
 

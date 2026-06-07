@@ -15,7 +15,7 @@
           "title": "System Health",
           "icon": {
             "type": "MATERIAL",
-            "value": "monitoring",
+            "value": "monitor_heart",
             "position": "TOP_LEFT"
           },
           "textPosition": "BOTTOM_LEFT",
@@ -97,8 +97,28 @@
       ]
     }
   ],
-  "windowX": 126.0,
-  "windowY": 377.0,
-  "windowWidth": 813.0,
-  "windowHeight": 326.0
+  "windowX": 598.0,
+  "windowY": 243.0,
+  "windowWidth": 903.0,
+  "windowHeight": 623.0,
+  "theme": {
+    "preset": "nord",
+    "colorBg": "#2e3440",
+    "colorBgDeep": "#242933",
+    "colorBar": "#242933",
+    "colorSurface": "#3b4252",
+    "colorSurfaceHigh": "#434c5e",
+    "colorSurfaceHighest": "#4c566a",
+    "colorSurfaceBright": "#616e88",
+    "colorSurfaceProps": "#2e3440",
+    "colorText": "#eceff4",
+    "colorTextVariant": "#e5e9f0",
+    "colorTextSubtle": "#d8dee9",
+    "colorBorder": "#4c566a",
+    "colorAccent": "#88c0d0",
+    "colorAccentStrong": "#81a1c1",
+    "colorSecondary": "#a3be8c",
+    "colorTertiary": "#ebcb8b",
+    "colorError": "#bf616a"
+  }
 }

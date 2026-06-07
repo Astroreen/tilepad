@@ -1,0 +1,173 @@
+/* ============================================================
+ * TilePad - Settings Panel CSS
+ * ============================================================ */
+
+/* Outer container for the settings view */
+.settings-root {
+    -fx-background-color: tilepad-bg;
+}
+
+/* ---- Sidebar (right) ---- */
+.settings-sidebar {
+    -fx-background-color: tilepad-bar;
+    -fx-padding: 16 0 16 0;
+    -fx-min-width: 160px;
+    -fx-pref-width: 160px;
+    -fx-border-color: transparent transparent transparent tilepad-border;
+    -fx-border-width: 0 0 0 1px;
+}
+
+.settings-nav-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: tilepad-text-variant;
+    -fx-font-size: 13px;
+    -fx-padding: 10 20 10 20;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER-LEFT;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-pref-width: 160px;
+    -fx-max-width: 160px;
+}
+
+.settings-nav-item:hover {
+    -fx-background-color: tilepad-surface-high;
+    -fx-text-fill: tilepad-text;
+}
+
+.settings-nav-item-active {
+    -fx-background-color: tilepad-surface;
+    -fx-text-fill: tilepad-accent;
+    -fx-font-weight: bold;
+    -fx-border-color: tilepad-accent transparent transparent transparent;
+    -fx-border-width: 0 0 0 3px;
+    -fx-padding: 10 20 10 17px;
+}
+
+.settings-nav-item-active:hover {
+    -fx-background-color: tilepad-surface;
+}
+
+/* ---- Content area (left/center) ---- */
+.settings-content {
+    -fx-background-color: tilepad-bg;
+    -fx-padding: 32 40 32 40;
+    -fx-spacing: 24;
+}
+
+.settings-section-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: tilepad-text;
+    -fx-padding: 0 0 4 0;
+}
+
+.settings-section-subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: tilepad-text-subtle;
+    -fx-padding: 0 0 16 0;
+}
+
+.settings-group-title {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: tilepad-text-subtle;
+    -fx-padding: 16 0 8 0;
+    -fx-text-transform: uppercase;
+}
+
+/* ---- Theme preset buttons ---- */
+.theme-preset-btn {
+    -fx-background-color: tilepad-surface;
+    -fx-text-fill: tilepad-text-variant;
+    -fx-font-size: 13px;
+    -fx-padding: 8 18 8 18;
+    -fx-cursor: hand;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: tilepad-border;
+    -fx-border-width: 1px;
+}
+
+.theme-preset-btn:hover {
+    -fx-background-color: tilepad-surface-high;
+    -fx-border-color: tilepad-text-subtle;
+    -fx-text-fill: tilepad-text;
+}
+
+.theme-preset-btn-active {
+    -fx-background-color: tilepad-surface-high;
+    -fx-border-color: tilepad-accent;
+    -fx-text-fill: tilepad-accent;
+    -fx-font-weight: bold;
+}
+
+.theme-preset-btn-active:hover {
+    -fx-background-color: tilepad-surface-bright;
+}
+
+/* ---- Color picker row ---- */
+.color-row-label {
+    -fx-text-fill: tilepad-text-variant;
+    -fx-font-size: 13px;
+    -fx-min-width: 200px;
+}
+
+.color-picker {
+    -fx-background-color: tilepad-surface;
+    -fx-border-color: tilepad-border;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-pref-height: 32px;
+}
+
+.color-picker:hover {
+    -fx-border-color: tilepad-text-subtle;
+}
+
+.color-picker .color-picker-label {
+    -fx-text-fill: tilepad-text;
+    -fx-font-size: 12px;
+}
+
+.color-picker .arrow-button {
+    -fx-background-color: transparent;
+}
+
+/* ---- Settings form rows ---- */
+.settings-row {
+    -fx-padding: 6 0 6 0;
+    -fx-spacing: 12;
+    -fx-alignment: CENTER-LEFT;
+}
+
+.settings-row-label {
+    -fx-text-fill: tilepad-text;
+    -fx-font-size: 13px;
+    -fx-min-width: 160px;
+}
+
+/* ---- Import / Export ---- */
+.import-export-card {
+    -fx-background-color: tilepad-surface;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: tilepad-border;
+    -fx-border-width: 1px;
+    -fx-padding: 20;
+    -fx-spacing: 12;
+}
+
+.import-export-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: tilepad-text;
+}
+
+.import-export-desc {
+    -fx-font-size: 12px;
+    -fx-text-fill: tilepad-text-subtle;
+    -fx-wrap-text: true;
+}

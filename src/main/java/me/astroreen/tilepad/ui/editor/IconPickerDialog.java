@@ -1,12 +1,14 @@
 package me.astroreen.tilepad.ui.editor;
 
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -18,6 +20,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class IconPickerDialog {
+
+    private static final int ICONS_PER_ROW = 5;
 
     private final Stage dialog;
     private String selectedName = null;
@@ -33,17 +37,11 @@ public class IconPickerDialog {
         List<String> allNames = new ArrayList<>(FontLoader.getIconNames());
         allNames.sort(String::compareTo);
 
-        FlowPane flowPane = new FlowPane();
-        flowPane.setHgap(4);
-        flowPane.setVgap(4);
-        flowPane.setPadding(new Insets(8));
-        flowPane.setStyle("-fx-background-color: #091421;");
-
-        allNames.forEach(name -> flowPane.getChildren().add(createIconCell(name)));
-
-        ScrollPane scroll = new ScrollPane(flowPane);
-        scroll.setFitToWidth(true);
-        scroll.setStyle("-fx-background-color: #091421; -fx-background: #091421;");
+        ListView<List<String>> listView = new ListView<>();
+        listView.setCellFactory(lv -> new IconRowCell());
+        listView.setStyle("-fx-background-color: #091421; -fx-background: #091421; -fx-border-color: transparent;");
+        listView.setItems(FXCollections.observableArrayList(chunk(allNames)));
+        VBox.setVgrow(listView, Priority.ALWAYS);
 
         TextField searchField = new TextField();
         searchField.setPromptText("Search icons\u2026");
@@ -51,19 +49,18 @@ public class IconPickerDialog {
                 "-fx-background-color: #16202e; -fx-text-fill: #d9e3f6; " +
                 "-fx-prompt-text-fill: #c2c6d6; -fx-border-color: #424754; " +
                 "-fx-border-radius: 4px; -fx-background-radius: 4px;");
-
         searchField.textProperty().addListener((obs, o, n) -> {
             String filter = n.toLowerCase();
-            flowPane.getChildren().clear();
-            allNames.stream()
+            List<String> filtered = allNames.stream()
                     .filter(nm -> nm.contains(filter))
-                    .forEach(nm -> flowPane.getChildren().add(createIconCell(nm)));
+                    .toList();
+            listView.setItems(FXCollections.observableArrayList(chunk(filtered)));
+            listView.scrollTo(0);
         });
 
-        VBox root = new VBox(8, searchField, scroll);
+        VBox root = new VBox(8, searchField, listView);
         root.setPadding(new Insets(12));
         root.setStyle("-fx-background-color: #091421;");
-        VBox.setVgrow(scroll, Priority.ALWAYS);
 
         Scene scene = new Scene(root, 620, 520);
         var cssUrl = IconPickerDialog.class.getResource("/me/astroreen/tilepad/styles/main.css");
@@ -77,27 +74,58 @@ public class IconPickerDialog {
         return Optional.ofNullable(selectedName);
     }
 
+    private List<List<String>> chunk(List<String> names) {
+        List<List<String>> rows = new ArrayList<>();
+        for (int i = 0; i < names.size(); i += ICONS_PER_ROW) {
+            rows.add(new ArrayList<>(names.subList(i, Math.min(i + ICONS_PER_ROW, names.size()))));
+        }
+        return rows;
+    }
+
+    private class IconRowCell extends ListCell<List<String>> {
+        private final HBox hbox = new HBox(4);
+
+        IconRowCell() {
+            hbox.setPadding(new Insets(2, 4, 2, 4));
+        }
+
+        @Override
+        protected void updateItem(List<String> row, boolean empty) {
+            super.updateItem(row, empty);
+            hbox.getChildren().clear();
+            if (empty || row == null) {
+                setGraphic(null);
+            } else {
+                for (String name : row) {
+                    hbox.getChildren().add(createIconCell(name));
+                }
+                setGraphic(hbox);
+            }
+            setStyle("-fx-background-color: #091421; -fx-border-width: 0; -fx-padding: 0;");
+        }
+    }
+
     private VBox createIconCell(String name) {
         String ch = FontLoader.codeToChar(FontLoader.getIconCodepoint(name));
 
         Label iconLabel = new Label(ch);
         iconLabel.setStyle(
                 "-fx-font-family: 'Material Icons Outlined'; " +
-                "-fx-font-size: 28px; " +
+                "-fx-font-size: 36px; " +
                 "-fx-text-fill: #d9e3f6;");
 
         Label nameLabel = new Label(name);
-        nameLabel.setStyle("-fx-font-size: 9px; -fx-text-fill: #c2c6d6;");
-        nameLabel.setMaxWidth(72);
+        nameLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: #c2c6d6;");
+        nameLabel.setMaxWidth(100);
         nameLabel.setWrapText(false);
 
-        String baseStyle  = "-fx-background-color: #16202e; -fx-background-radius: 4px; -fx-cursor: hand;";
-        String hoverStyle = "-fx-background-color: #212b39; -fx-background-radius: 4px; -fx-cursor: hand;";
+        String baseStyle  = "-fx-background-color: #16202e; -fx-background-radius: 6px; -fx-cursor: hand;";
+        String hoverStyle = "-fx-background-color: #212b39; -fx-background-radius: 6px; -fx-cursor: hand;";
 
-        VBox cell = new VBox(4, iconLabel, nameLabel);
+        VBox cell = new VBox(6, iconLabel, nameLabel);
         cell.setAlignment(Pos.CENTER);
-        cell.setPadding(new Insets(6));
-        cell.setPrefWidth(80);
+        cell.setPadding(new Insets(10));
+        cell.setPrefWidth(110);
         cell.setStyle(baseStyle);
 
         cell.setOnMouseEntered(e -> cell.setStyle(hoverStyle));

@@ -1,95 +1,51 @@
 /* ============================================================
  * TilePad - Main Application CSS
- * Design System: Command & Control System (Dark Theme)
- * JavaFX 21 CSS
+ * Uses named lookup colors defined by ThemeService on .root.
+ * All hex values live in ThemeConfig presets - not here.
  * ============================================================ */
-
-/* ----- DESIGN TOKENS (from DESIGN.md) -----
- *
- * SURFACE / BACKGROUND
- * surface / background:          #091421
- * surface-dim:                   #091421
- * surface-bright:                #303a48
- * surface-container-lowest:      #050f1c
- * surface-container-low:         #121c2a
- * surface-container:             #16202e
- * surface-container-high:        #212b39
- * surface-container-highest:     #2b3544
- * surface-variant:               #2b3544
- *
- * ON-SURFACE
- * on-surface:                    #d9e3f6
- * on-surface-variant:            #c2c6d6
- * inverse-surface:               #d9e3f6
- * inverse-on-surface:            #27313f
- *
- * OUTLINE
- * outline:                       #8c909f
- * outline-variant:               #424754
- *
- * PRIMARY
- * primary:                       #adc6ff
- * on-primary:                    #002e6a
- * primary-container:             #4d8eff
- * on-primary-container:          #00285d
- * inverse-primary:               #005ac2
- * primary-fixed:                 #d8e2ff
- * primary-fixed-dim:             #adc6ff
- * on-primary-fixed:              #001a42
- * on-primary-fixed-variant:      #004395
- * surface-tint:                  #adc6ff
- *
- * SECONDARY
- * secondary:                     #4edea3
- * on-secondary:                  #003824
- * secondary-container:           #00a572
- * on-secondary-container:        #00311f
- * secondary-fixed:               #6ffbbe
- * secondary-fixed-dim:           #4edea3
- * on-secondary-fixed:            #002113
- * on-secondary-fixed-variant:    #005236
- *
- * TERTIARY
- * tertiary:                      #ffb786
- * on-tertiary:                   #502400
- * tertiary-container:            #df7412
- * on-tertiary-container:         #461f00
- * tertiary-fixed:                #ffdcc6
- * tertiary-fixed-dim:            #ffb786
- * on-tertiary-fixed:             #311400
- * on-tertiary-fixed-variant:     #723600
- *
- * ERROR
- * error:                         #ffb4ab
- * on-error:                      #690005
- * error-container:               #93000a
- * on-error-container:            #ffdad6
- *
- * ------------------------------------------ */
 
 /* Root */
 .root {
-    -fx-background-color: #091421;
+    /* Default named colors - overridden at runtime by ThemeService */
+    tilepad-bg:              #091421;
+    tilepad-bg-deep:         #050f1c;
+    tilepad-bar:             #121c2a;
+    tilepad-surface:         #16202e;
+    tilepad-surface-high:    #212b39;
+    tilepad-surface-highest: #2b3544;
+    tilepad-surface-bright:  #303a48;
+    tilepad-surface-props:   #0d1825;
+    tilepad-text:            #d9e3f6;
+    tilepad-text-variant:    #c2c6d6;
+    tilepad-text-subtle:     #8c909f;
+    tilepad-border:          #424754;
+    tilepad-accent:          #adc6ff;
+    tilepad-accent-strong:   #4d8eff;
+    tilepad-secondary:       #4edea3;
+    tilepad-tertiary:        #ffb786;
+    tilepad-error:           #ffb4ab;
+
+    -fx-background-color: tilepad-bg;
     -fx-font-family: "Inter";
     -fx-font-size: 13px;
 }
 
 .main-root {
-    -fx-background-color: #091421;
+    -fx-background-color: tilepad-bg;
 }
 
 /* Bottom navigation bar */
 .bottom-bar {
-    -fx-background-color: #121c2a;
+    -fx-background-color: tilepad-bar;
     -fx-padding: 6 8 6 8;
     -fx-min-height: 44px;
     -fx-pref-height: 44px;
 }
 
-/* Settings gear button */
+/* Icon buttons (editor, settings) */
 .icon-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #c2c6d6;
+    -fx-text-fill: tilepad-text-variant;
     -fx-font-size: 18px;
     -fx-padding: 4 8 4 8;
     -fx-cursor: hand;
@@ -98,18 +54,18 @@
 }
 
 .icon-button:hover {
-    -fx-background-color: #212b39;
-    -fx-text-fill: #d9e3f6;
+    -fx-background-color: tilepad-surface-high;
+    -fx-text-fill: tilepad-text;
 }
 
 .icon-button:pressed {
-    -fx-background-color: #2b3544;
+    -fx-background-color: tilepad-surface-highest;
 }
 
 /* Profile nav buttons < > */
 .nav-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #c2c6d6;
+    -fx-text-fill: tilepad-text-variant;
     -fx-font-size: 16px;
     -fx-padding: 4 10 4 10;
     -fx-cursor: hand;
@@ -119,17 +75,17 @@
 }
 
 .nav-button:hover {
-    -fx-background-color: #212b39;
-    -fx-text-fill: #d9e3f6;
+    -fx-background-color: tilepad-surface-high;
+    -fx-text-fill: tilepad-text;
 }
 
 .nav-button:pressed {
-    -fx-background-color: #2b3544;
+    -fx-background-color: tilepad-surface-highest;
 }
 
 /* Profile name in bottom bar */
 .profile-name-label {
-    -fx-text-fill: #d9e3f6;
+    -fx-text-fill: tilepad-text;
     -fx-font-size: 13px;
     -fx-font-weight: bold;
     -fx-alignment: center;
@@ -138,8 +94,8 @@
 
 /* Toolbar buttons */
 .toolbar-button {
-    -fx-background-color: #212b39;
-    -fx-text-fill: #d9e3f6;
+    -fx-background-color: tilepad-surface-high;
+    -fx-text-fill: tilepad-text;
     -fx-background-radius: 6px;
     -fx-border-radius: 6px;
     -fx-padding: 4 12 4 12;
@@ -148,65 +104,48 @@
 }
 
 .toolbar-button:hover {
-    -fx-background-color: #303a48;
+    -fx-background-color: tilepad-surface-bright;
 }
 
 .toolbar-button:pressed {
-    -fx-background-color: #2b3544;
+    -fx-background-color: tilepad-surface-highest;
 }
 
 /* ScrollPane container */
 .main-scroll {
-    -fx-background-color: #091421;
-    -fx-background: #091421;
+    -fx-background-color: tilepad-bg;
+    -fx-background: tilepad-bg;
     -fx-border-color: transparent;
 }
 
 .main-scroll > .viewport {
-    -fx-background-color: #091421;
+    -fx-background-color: tilepad-bg;
 }
 
 .main-scroll .scroll-bar {
-    -fx-background-color: #121c2a;
+    -fx-background-color: tilepad-bar;
 }
 
 .main-scroll .scroll-bar .thumb {
-    -fx-background-color: #424754;
+    -fx-background-color: tilepad-border;
     -fx-background-radius: 4px;
 }
 
 .main-scroll .scroll-bar .thumb:hover {
-    -fx-background-color: #8c909f;
+    -fx-background-color: tilepad-text-subtle;
 }
 
 /* General text styles */
-.text-on-surface {
-    -fx-text-fill: #d9e3f6;
-}
-
-.text-on-surface-variant {
-    -fx-text-fill: #c2c6d6;
-}
-
-.text-primary {
-    -fx-text-fill: #adc6ff;
-}
-
-.text-secondary {
-    -fx-text-fill: #4edea3;
-}
-
-.text-tertiary {
-    -fx-text-fill: #ffb786;
-}
-
-.text-error {
-    -fx-text-fill: #ffb4ab;
-}
+.text-on-surface         { -fx-text-fill: tilepad-text; }
+.text-on-surface-variant { -fx-text-fill: tilepad-text-variant; }
+.text-primary            { -fx-text-fill: tilepad-accent; }
+.text-secondary          { -fx-text-fill: tilepad-secondary; }
+.text-tertiary           { -fx-text-fill: tilepad-tertiary; }
+.text-error              { -fx-text-fill: tilepad-error; }
 
 /* Separator */
 .separator .line {
-    -fx-border-color: #424754;
+    -fx-border-color: tilepad-border;
     -fx-border-width: 1px;
 }
 
@@ -214,24 +153,24 @@
 .label-sm {
     -fx-font-size: 10px;
     -fx-font-weight: bold;
-    -fx-text-fill: #c2c6d6;
+    -fx-text-fill: tilepad-text-variant;
 }
 
 .label-md {
     -fx-font-size: 12px;
-    -fx-text-fill: #d9e3f6;
+    -fx-text-fill: tilepad-text;
 }
 
 .label-lg {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: #d9e3f6;
+    -fx-text-fill: tilepad-text;
 }
 
 /* Menu / ContextMenu */
 .context-menu {
-    -fx-background-color: #16202e;
-    -fx-border-color: #424754;
+    -fx-background-color: tilepad-surface;
+    -fx-border-color: tilepad-border;
     -fx-border-width: 1px;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
@@ -240,22 +179,22 @@
 
 .menu-item {
     -fx-background-color: transparent;
-    -fx-text-fill: #d9e3f6;
+    -fx-text-fill: tilepad-text;
     -fx-font-size: 13px;
     -fx-padding: 6 12 6 12;
 }
 
 .menu-item:hover,
 .menu-item:focused {
-    -fx-background-color: #212b39;
+    -fx-background-color: tilepad-surface-high;
 }
 
 /* TextField */
 .text-field {
-    -fx-background-color: #16202e;
-    -fx-text-fill: #d9e3f6;
-    -fx-prompt-text-fill: #8c909f;
-    -fx-border-color: #424754;
+    -fx-background-color: tilepad-surface;
+    -fx-text-fill: tilepad-text;
+    -fx-prompt-text-fill: tilepad-text-subtle;
+    -fx-border-color: tilepad-border;
     -fx-border-radius: 6px;
     -fx-background-radius: 6px;
     -fx-border-width: 1px;
@@ -263,51 +202,122 @@
 }
 
 .text-field:focused {
-    -fx-border-color: #adc6ff;
+    -fx-border-color: tilepad-accent;
 }
 
 /* Tooltip */
 .tooltip {
-    -fx-background-color: #2b3544;
-    -fx-text-fill: #d9e3f6;
+    -fx-background-color: tilepad-surface-highest;
+    -fx-text-fill: tilepad-text;
     -fx-font-size: 12px;
     -fx-background-radius: 4px;
-    -fx-border-color: #424754;
+    -fx-border-color: tilepad-border;
     -fx-border-width: 1px;
 }
 
-/* SplitPane dark theme */
+/* SplitPane */
 .split-pane {
-    -fx-background-color: #091421;
+    -fx-background-color: tilepad-bg;
     -fx-padding: 0;
 }
 
 .split-pane > .split-pane-divider {
-    -fx-background-color: #424754;
+    -fx-background-color: tilepad-border;
     -fx-padding: 0 1 0 1;
 }
 
-/* Generic ScrollPane dark (used in editor) */
+/* Generic ScrollPane */
 .scroll-pane {
-    -fx-background-color: #091421;
-    -fx-background: #091421;
+    -fx-background-color: tilepad-bg;
+    -fx-background: tilepad-bg;
     -fx-border-color: transparent;
 }
 
 .scroll-pane > .viewport {
-    -fx-background-color: #091421;
+    -fx-background-color: tilepad-bg;
 }
 
-/* Dark panel (TilePropertiesPanel, editor right side) */
+.scroll-pane .scroll-bar {
+    -fx-background-color: tilepad-bar;
+}
+
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: tilepad-border;
+    -fx-background-radius: 4px;
+}
+
+.scroll-pane .scroll-bar .thumb:hover {
+    -fx-background-color: tilepad-text-subtle;
+}
+
+.scroll-pane .scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar .increment-button,
+.scroll-pane .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 2px;
+}
+
+.scroll-pane .scroll-bar .increment-arrow,
+.scroll-pane .scroll-bar .decrement-arrow {
+    -fx-background-color: tilepad-text-subtle;
+}
+
+/* ListView */
+.list-view {
+    -fx-background-color: tilepad-bg;
+    -fx-background: tilepad-bg;
+    -fx-border-color: transparent;
+}
+
+.list-view .list-cell {
+    -fx-background-color: tilepad-bg;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: tilepad-surface-high;
+}
+
+.list-view .scroll-bar {
+    -fx-background-color: tilepad-bar;
+}
+
+.list-view .scroll-bar .thumb {
+    -fx-background-color: tilepad-border;
+    -fx-background-radius: 4px;
+}
+
+.list-view .scroll-bar .thumb:hover {
+    -fx-background-color: tilepad-text-subtle;
+}
+
+.list-view .scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.list-view .scroll-bar .increment-button,
+.list-view .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 2px;
+}
+
+.list-view .scroll-bar .increment-arrow,
+.list-view .scroll-bar .decrement-arrow {
+    -fx-background-color: tilepad-text-subtle;
+}
+
+/* Dark panel */
 .dark-panel {
-    -fx-background-color: #091421;
+    -fx-background-color: tilepad-bg;
     -fx-padding: 12;
 }
 
 /* Material icon buttons in editor toolbar */
 .editor-icon-btn {
-    -fx-background-color: #212b39;
-    -fx-text-fill: #c2c6d6;
+    -fx-background-color: tilepad-surface-high;
+    -fx-text-fill: tilepad-text-variant;
     -fx-font-family: "Material Icons Outlined";
     -fx-font-size: 18px;
     -fx-padding: 4 8 4 8;
@@ -319,12 +329,12 @@
 }
 
 .editor-icon-btn:hover {
-    -fx-background-color: #303a48;
-    -fx-text-fill: #d9e3f6;
+    -fx-background-color: tilepad-surface-bright;
+    -fx-text-fill: tilepad-text;
 }
 
 .editor-icon-btn:pressed {
-    -fx-background-color: #2b3544;
+    -fx-background-color: tilepad-surface-highest;
 }
 
 .editor-icon-btn:disabled {
@@ -333,30 +343,30 @@
 }
 
 .editor-icon-btn-danger {
-    -fx-text-fill: #ffb4ab;
+    -fx-text-fill: tilepad-error;
+}
+
+.editor-icon-btn-danger:hover {
+    -fx-background-color: derive(tilepad-surface-high, -10%);
+    -fx-text-fill: tilepad-error;
 }
 
 /* Editor / main toolbar */
 .toolbar {
-    -fx-background-color: #121c2a;
+    -fx-background-color: tilepad-bar;
 }
 
 .toolbar .label {
-    -fx-text-fill: #d9e3f6;
+    -fx-text-fill: tilepad-text;
     -fx-font-size: 13px;
 }
 
-.editor-icon-btn-danger:hover {
-    -fx-background-color: #3a2020;
-    -fx-text-fill: #ffb4ab;
-}
-
 /* ============================================================
- * ComboBox dark theme
+ * ComboBox
  * ============================================================ */
 .combo-box {
-    -fx-background-color: #16202e;
-    -fx-border-color: #424754;
+    -fx-background-color: tilepad-surface;
+    -fx-border-color: tilepad-border;
     -fx-border-radius: 6px;
     -fx-background-radius: 6px;
     -fx-border-width: 1px;
@@ -364,16 +374,16 @@
 
 .combo-box .list-cell {
     -fx-background-color: transparent;
-    -fx-text-fill: #d9e3f6;
+    -fx-text-fill: tilepad-text;
     -fx-padding: 4 8 4 8;
 }
 
 .combo-box:focused {
-    -fx-border-color: #adc6ff;
+    -fx-border-color: tilepad-accent;
 }
 
 .combo-box:hover {
-    -fx-border-color: #8c909f;
+    -fx-border-color: tilepad-text-subtle;
 }
 
 .combo-box .arrow-button {
@@ -382,13 +392,13 @@
 }
 
 .combo-box .arrow {
-    -fx-background-color: #c2c6d6;
-    -fx-mark-color: #c2c6d6;
+    -fx-background-color: tilepad-text-variant;
+    -fx-mark-color: tilepad-text-variant;
 }
 
 .combo-box-popup .list-view {
-    -fx-background-color: #16202e;
-    -fx-border-color: #424754;
+    -fx-background-color: tilepad-surface;
+    -fx-border-color: tilepad-border;
     -fx-border-width: 1px;
     -fx-border-radius: 6px;
     -fx-background-radius: 6px;
@@ -397,32 +407,32 @@
 
 .combo-box-popup .list-cell {
     -fx-background-color: transparent;
-    -fx-text-fill: #d9e3f6;
+    -fx-text-fill: tilepad-text;
     -fx-padding: 6 10 6 10;
 }
 
 .combo-box-popup .list-cell:hover,
 .combo-box-popup .list-cell:filled:hover {
-    -fx-background-color: #212b39;
+    -fx-background-color: tilepad-surface-high;
 }
 
 .combo-box-popup .list-cell:selected,
 .combo-box-popup .list-cell:filled:selected {
-    -fx-background-color: #2b3544;
-    -fx-text-fill: #adc6ff;
+    -fx-background-color: tilepad-surface-highest;
+    -fx-text-fill: tilepad-accent;
 }
 
 .combo-box-popup .list-cell:filled:selected:hover {
-    -fx-background-color: #303a48;
-    -fx-text-fill: #adc6ff;
+    -fx-background-color: tilepad-surface-bright;
+    -fx-text-fill: tilepad-accent;
 }
 
 /* ============================================================
- * Spinner dark theme
+ * Spinner
  * ============================================================ */
 .spinner {
-    -fx-background-color: #16202e;
-    -fx-border-color: #424754;
+    -fx-background-color: tilepad-surface;
+    -fx-border-color: tilepad-border;
     -fx-border-radius: 6px;
     -fx-background-radius: 6px;
     -fx-border-width: 1px;
@@ -432,19 +442,19 @@
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-border-width: 0;
-    -fx-text-fill: #d9e3f6;
-    -fx-prompt-text-fill: #8c909f;
+    -fx-text-fill: tilepad-text;
+    -fx-prompt-text-fill: tilepad-text-subtle;
     -fx-padding: 4 6 4 8;
 }
 
 .spinner:focused {
-    -fx-border-color: #adc6ff;
+    -fx-border-color: tilepad-accent;
 }
 
 .spinner .increment-arrow-button,
 .spinner .decrement-arrow-button {
-    -fx-background-color: #212b39;
-    -fx-border-color: #424754;
+    -fx-background-color: tilepad-surface-high;
+    -fx-border-color: tilepad-border;
     -fx-border-width: 0 0 0 1px;
     -fx-background-radius: 0 6px 6px 0;
     -fx-cursor: hand;
@@ -452,25 +462,25 @@
 
 .spinner .increment-arrow-button:hover,
 .spinner .decrement-arrow-button:hover {
-    -fx-background-color: #303a48;
+    -fx-background-color: tilepad-surface-bright;
 }
 
 .spinner .increment-arrow-button:pressed,
 .spinner .decrement-arrow-button:pressed {
-    -fx-background-color: #2b3544;
+    -fx-background-color: tilepad-surface-highest;
 }
 
 .spinner .increment-arrow,
 .spinner .decrement-arrow {
-    -fx-background-color: #c2c6d6;
+    -fx-background-color: tilepad-text-variant;
 }
 
 /* ============================================================
- * Button base dark theme
+ * Button base
  * ============================================================ */
 .button {
-    -fx-background-color: #212b39;
-    -fx-text-fill: #d9e3f6;
+    -fx-background-color: tilepad-surface-high;
+    -fx-text-fill: tilepad-text;
     -fx-background-radius: 6px;
     -fx-border-radius: 6px;
     -fx-border-width: 0;
@@ -479,11 +489,11 @@
 }
 
 .button:hover {
-    -fx-background-color: #303a48;
+    -fx-background-color: tilepad-surface-bright;
 }
 
 .button:pressed {
-    -fx-background-color: #2b3544;
+    -fx-background-color: tilepad-surface-highest;
 }
 
 .button:disabled {
@@ -492,16 +502,40 @@
 }
 
 .button-primary {
-    -fx-background-color: #4d8eff;
-    -fx-text-fill: #002e6a;
+    -fx-background-color: tilepad-accent-strong;
+    -fx-text-fill: tilepad-bg;
     -fx-font-weight: bold;
 }
 
 .button-primary:hover {
-    -fx-background-color: #adc6ff;
+    -fx-background-color: tilepad-accent;
 }
 
 .button-primary:pressed {
-    -fx-background-color: #005ac2;
-    -fx-text-fill: #d8e2ff;
+    -fx-background-color: derive(tilepad-accent-strong, -20%);
+    -fx-text-fill: tilepad-text;
+}
+
+/* ============================================================
+ * CheckBox
+ * ============================================================ */
+.check-box {
+    -fx-text-fill: tilepad-text;
+}
+
+.check-box .box {
+    -fx-background-color: tilepad-surface;
+    -fx-border-color: tilepad-border;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-border-width: 1px;
+}
+
+.check-box:selected .box {
+    -fx-background-color: tilepad-accent-strong;
+    -fx-border-color: tilepad-accent-strong;
+}
+
+.check-box .mark {
+    -fx-background-color: tilepad-bg;
 }

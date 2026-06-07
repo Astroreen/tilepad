@@ -30,9 +30,6 @@
             <Button styleClass="editor-icon-btn" text="&#xE15B;" onAction="#onDeleteProfile">
                 <tooltip><Tooltip text="Delete Profile"/></tooltip>
             </Button>
-            <Button styleClass="editor-icon-btn" text="&#xE8B8;" onAction="#onOpenConfigSettings">
-                <tooltip><Tooltip text="Config Path Settings"/></tooltip>
-            </Button>
             <Region HBox.hgrow="ALWAYS"/>
             <Button styleClass="editor-icon-btn" text="&#xE146;" onAction="#onAddTile">
                 <tooltip><Tooltip text="Add Tile"/></tooltip>
