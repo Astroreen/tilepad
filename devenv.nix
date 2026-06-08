@@ -9,6 +9,9 @@
 
   packages = with pkgs; [
     maven
+    dpkg
+    rpm
+    fakeroot
   ];
 
   # 2. Define the library path for JavaFX's unpatched binaries
@@ -29,6 +32,10 @@
   env.JAVA_MODULE_PATH = "${pkgs.javaPackages.openjfx25}/modules";
   env.JAVA_LIBRARY_PATH = "${pkgs.javaPackages.openjfx25}/modules_libs";
   env.JAVAFX_HOME = "/home/astroreen/.local/share/javafx/javafx-sdk-25.0.2";
+
+  scripts.build-dist.exec = ''
+    bash scripts/build-dist.sh "$@"
+  '';
 
   # Optional: Print a nice message when you enter the shell
   enterShell = ''

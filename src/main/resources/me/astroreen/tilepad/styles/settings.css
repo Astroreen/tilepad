@@ -171,3 +171,73 @@
     -fx-text-fill: tilepad-text-subtle;
     -fx-wrap-text: true;
 }
+
+/* ---- Profile order list ---- */
+.profile-order-list {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.profile-order-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 2 0 2 0;
+}
+
+.profile-order-list .list-cell:filled:selected,
+.profile-order-list .list-cell:filled:selected:focused,
+.profile-order-list .list-cell:focused {
+    -fx-background-color: transparent;
+}
+
+.profile-order-list:focused {
+    -fx-background-color: transparent;
+}
+
+.profile-order-row {
+    -fx-background-color: tilepad-surface;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: tilepad-border;
+    -fx-border-width: 1px;
+    -fx-padding: 8 12 8 12;
+    -fx-spacing: 8;
+    -fx-alignment: CENTER-LEFT;
+}
+
+.profile-order-row:hover {
+    -fx-background-color: tilepad-surface-high;
+}
+
+.profile-order-drag-handle {
+    -fx-text-fill: tilepad-text-subtle;
+    -fx-cursor: move;
+    -fx-font-size: 16px;
+    -fx-padding: 0 4 0 0;
+}
+
+.profile-order-name {
+    -fx-text-fill: tilepad-text;
+    -fx-font-size: 13px;
+}
+
+.profile-order-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: tilepad-text-variant;
+    -fx-font-size: 11px;
+    -fx-padding: 2 6 2 6;
+    -fx-cursor: hand;
+    -fx-border-color: tilepad-border;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.profile-order-btn:hover {
+    -fx-background-color: tilepad-surface-high;
+    -fx-text-fill: tilepad-text;
+}
+
+.profile-order-btn:disabled {
+    -fx-opacity: 0.3;
+}
