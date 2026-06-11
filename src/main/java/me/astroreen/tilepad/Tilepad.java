@@ -32,19 +32,17 @@ public class Tilepad extends Application {
         ConfigService configService = new ConfigService();
         ActionService actionService = new ActionService();
 
-        // Seed default config if no config file exists yet
-        String configPath = System.getProperty("user.dir") + "/tilepad-config.json";
-        Path configFile = Paths.get(configPath);
-        if (!Files.exists(configFile)) {
+        String defaultPath = ConfigService.getDefaultConfigPath();
+        Path defaultFile = Paths.get(defaultPath);
+        if (!Files.exists(defaultFile)) {
             try (InputStream is = Tilepad.class.getResourceAsStream(
                     "/me/astroreen/tilepad/config/default-config.json")) {
                 if (is != null) {
-                    if (configFile.getParent() != null) {
-                        Files.createDirectories(configFile.getParent());
+                    if (defaultFile.getParent() != null) {
+                        Files.createDirectories(defaultFile.getParent());
                     }
-                    Files.copy(is, configFile);
-                }
-                else {
+                    Files.copy(is, defaultFile);
+                } else {
                     LOG.warning("Default config template not found in resources");
                 }
             } catch (Exception e) {
@@ -52,8 +50,15 @@ public class Tilepad extends Application {
             }
         }
 
-        AppConfig appConfig = configService.load(configPath);
-        appConfig.setConfigPath(configPath);
+        AppConfig appConfig = configService.load(defaultPath);
+        String savedPath = appConfig.getConfigPath();
+        if (savedPath != null && !savedPath.isBlank() && !savedPath.equals(defaultPath)
+                && Files.exists(Paths.get(savedPath))) {
+            appConfig = configService.load(savedPath);
+        }
+        if (appConfig.getConfigPath() == null || appConfig.getConfigPath().isBlank()) {
+            appConfig.setConfigPath(defaultPath);
+        }
 
         FXMLLoader loader = new FXMLLoader(
                 Tilepad.class.getResource("/me/astroreen/tilepad/main.fxml"));

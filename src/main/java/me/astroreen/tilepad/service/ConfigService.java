@@ -78,16 +78,32 @@ public class ConfigService {
 
     /**
      * Resolve the effective config file path.
-     * If config.getConfigPath() is blank, use app directory +
-     * "/tilepad-config.json"
+     * If config.getConfigPath() is blank, use the platform default location.
      * Otherwise use config.getConfigPath()
      */
     public String resolveConfigPath(AppConfig config) {
         String path = config.getConfigPath();
         if (path == null || path.isBlank()) {
-            return System.getProperty("user.dir") + "/tilepad-config.json";
+            return getDefaultConfigPath();
         }
         return path;
+    }
+
+    /**
+     * Returns the platform-appropriate default config file path.
+     * Windows: %APPDATA%\Tilepad\tilepad-config.json
+     * Other:   <user.dir>/tilepad-config.json  (preserves existing behaviour)
+     */
+    public static String getDefaultConfigPath() {
+        String os = System.getProperty("os.name", "").toLowerCase();
+        if (os.contains("win")) {
+            String appData = System.getenv("APPDATA");
+            if (appData == null || appData.isBlank()) {
+                appData = System.getProperty("user.home") + "\\AppData\\Roaming";
+            }
+            return appData + "\\Tilepad\\tilepad-config.json";
+        }
+        return System.getProperty("user.dir") + "/tilepad-config.json";
     }
 
     /**

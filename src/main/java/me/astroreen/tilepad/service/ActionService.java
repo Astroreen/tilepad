@@ -56,37 +56,51 @@ public class ActionService {
         }, "action-executor").start();
     }
 
-    private void executeCommandInTerminal(String command) throws IOException {
+    private String[] buildShellCommand(String command, boolean keepOpen) {
+        String os = System.getProperty("os.name", "").toLowerCase();
+        if (os.contains("win")) {
+            return new String[]{"cmd.exe", keepOpen ? "/k" : "/c", command};
+        }
         String shell = System.getenv("SHELL");
-        if (shell == null || shell.isBlank())
-            shell = "zsh";
-        String[] shellCmd = { shell, "-i", "-c", command };
+        if (shell == null || shell.isBlank()) shell = "/bin/sh";
+        return keepOpen
+                ? new String[]{shell, "-i", "-c", command}
+                : new String[]{shell, "-c", command};
+    }
 
-        String[][][] candidates = {
-                { { "kitty" }, shellCmd },
-                { { "alacritty" }, concat(new String[] { "-e" }, shellCmd) },
-                { { "foot" }, shellCmd },
-                { { "xterm" }, concat(new String[] { "-e" }, shellCmd) },
-                { { "gnome-terminal" }, concat(new String[] { "--" }, shellCmd) },
-                { { "konsole" }, concat(new String[] { "-e" }, shellCmd) },
-        };
+    private void executeCommand(String command) throws IOException {
+        new ProcessBuilder(buildShellCommand(command, false)).start();
+    }
 
-        for (String[][] candidate : candidates) {
-            String terminal = candidate[0][0];
-            String[] args = candidate[1];
-            String[] fullCmd = new String[1 + args.length];
-            fullCmd[0] = terminal;
-            System.arraycopy(args, 0, fullCmd, 1, args.length);
+    private void executeCommandInTerminal(String command) throws IOException {
+        String[] shellCmd = buildShellCommand(command, true);
+        String os = System.getProperty("os.name", "").toLowerCase();
+
+        String[][] candidates = os.contains("win")
+                ? new String[][] {
+                        concat(new String[]{"wt"}, shellCmd),
+                        {"powershell.exe", "-NoExit", "-Command", command},
+                        shellCmd,
+                  }
+                : new String[][] {
+                        concat(new String[]{"kitty"}, shellCmd),
+                        concat(new String[]{"alacritty", "-e"}, shellCmd),
+                        concat(new String[]{"foot"}, shellCmd),
+                        concat(new String[]{"xterm", "-e"}, shellCmd),
+                        concat(new String[]{"gnome-terminal", "--"}, shellCmd),
+                        concat(new String[]{"konsole", "-e"}, shellCmd),
+                  };
+
+        for (String[] cmd : candidates) {
             try {
-                new ProcessBuilder(fullCmd).start();
+                new ProcessBuilder(cmd).start();
                 return;
             } catch (IOException e) {
                 LOG.throwing(ActionService.class.getName(), "executeCommandInTerminal", e);
             }
         }
 
-        String msg = "No terminal emulator found, executing command directly: " + command;
-        LOG.warning(msg);
+        LOG.warning("No terminal emulator found, executing command directly: " + command);
         executeCommand(command);
     }
 
@@ -97,33 +111,25 @@ public class ActionService {
         return result;
     }
 
-    private void executeCommand(String command)
-            throws UnsupportedOperationException, IOException, NullPointerException, IndexOutOfBoundsException {
-        new ProcessBuilder("zsh", "-i", "-c", command)
-                .inheritIO()
-                .start();
-    }
-
     private void executeUrl(String url) throws NullPointerException, IOException, UnsupportedOperationException,
             URISyntaxException, IndexOutOfBoundsException {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             Desktop.getDesktop().browse(new URI(url));
         } else {
-            // Fallback for environments without Desktop support (Linux)
-            new ProcessBuilder("xdg-open", url).inheritIO().start();
+            new ProcessBuilder("xdg-open", url).start();
         }
     }
 
     private void executeApp(String path) throws UnsupportedOperationException, IOException, NullPointerException,
             IndexOutOfBoundsException, IllegalArgumentException {
         File file = new File(path);
-        if (file.exists()) {
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
-                Desktop.getDesktop().open(file);
-            } else {
-                // Fallback: xdg-open for Linux
-                new ProcessBuilder("xdg-open", path).inheritIO().start();
-            }
+        String os = System.getProperty("os.name", "").toLowerCase();
+        if (os.contains("win")) {
+            new ProcessBuilder(path).start();
+        } else if (file.exists() && file.canExecute()) {
+            new ProcessBuilder(path).start();
+        } else if (file.exists()) {
+            new ProcessBuilder("xdg-open", path).start();
         } else {
             executeCommand(path);
         }
